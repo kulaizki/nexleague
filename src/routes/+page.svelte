@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
+  import Footer from '$lib/components/Footer.svelte';
 
   let show: boolean = false;
   let hideIntro: boolean = false;
@@ -55,5 +56,5 @@
       </div>
     {/if}
   </section>
-  <!-- <Footer  /> -->
+  <Footer  />
 </div>
