@@ -47,7 +47,7 @@
       <div class="max-w-7xl md:max-w-4xl text-center" transition:blurFly>
         {#if !hideIntro}
           <h1 class="mb-4 text-4xl font-bold tracking-tight md:text-7xl">
-            welcome to <span class="text-green-500 [text-shadow:0_0_8px_rgba(56,189,248,0.7)]">nexleague</span>
+            welcome to <span class="text-green-500 [text-shadow:0_0_8px_rgba(0,255,17,.7)]">nexleague</span>
           </h1>
           <p class="mb-6 text-lg text-gray-300 md:text-xl">
             Let's improve in League of Legends.
