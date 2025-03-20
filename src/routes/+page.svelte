@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
   import Footer from '$lib/components/Footer.svelte';
+  import SummonerSearch from './SummonerSearch.svelte';
 
   let show: boolean = false;
   let hideIntro: boolean = false;
@@ -52,6 +53,7 @@
           <p class="mb-6 text-lg text-gray-300 md:text-xl">
             Let's improve in League of Legends.
           </p>
+          <SummonerSearch />
         {/if}
       </div>
     {/if}
