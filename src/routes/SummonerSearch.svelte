@@ -4,7 +4,7 @@
   import { fade } from 'svelte/transition';
   
   let summonerName = '';
-  let region = 'North America'; // Default to a user-friendly name
+  let region = 'Southeast Asia';
   let loading = false;
   let error = '';
   
