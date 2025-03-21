@@ -9,22 +9,27 @@
   let error = '';
   
   const regions = [
-    { value: 'na1', label: 'North America' },
-    { value: 'euw1', label: 'Europe West' },
-    { value: 'eun1', label: 'Europe Nordic & East' },
-    { value: 'kr', label: 'Korea' },
-    { value: 'br1', label: 'Brazil' },
-    { value: 'jp1', label: 'Japan' },
-    { value: 'la1', label: 'Latin America North' },
-    { value: 'la2', label: 'Latin America South' },
-    { value: 'oc1', label: 'Oceania' },
-    { value: 'tr1', label: 'Turkey' },
-    { value: 'ru', label: 'Russia' }
+    { value: 'br1', label: 'Brazil (BR1)' },
+    { value: 'eun1', label: 'Europe Nordic & East (EUN1)' },
+    { value: 'euw1', label: 'Europe West (EUW1)' },
+    { value: 'jp1', label: 'Japan (JP1)' },
+    { value: 'kr', label: 'Korea (KR)' },
+    { value: 'la1', label: 'Latin America North (LA1)' },
+    { value: 'la2', label: 'Latin America South (LA2)' },
+    { value: 'na1', label: 'North America (NA1)' },
+    { value: 'oc1', label: 'Oceania (OC1)' },
+    { value: 'ru', label: 'Russia (RU)' },
+    { value: 'tr1', label: 'Turkey (TR1)' },
+    { value: 'ph2', label: 'Philippines (PH2)' },
+    { value: 'sg2', label: 'Singapore/Malaysia (SG2)' },
+    { value: 'th2', label: 'Thailand (TH2)' },
+    { value: 'tw2', label: 'Taiwan (TW2)' },
+    { value: 'vn2', label: 'Vietnam (VN2)' }
   ];
   
   async function handleSubmit() {
     if (!summonerName.trim()) {
-      error = 'Please enter a summoner name';
+      error = 'Please enter a Riot ID';
       return;
     }
     
@@ -32,7 +37,6 @@
     loading = true;
     
     try {
-      // Format the summoner name for the URL
       const formattedName = encodeURIComponent(summonerName.trim());
       goto(`/summoner/${region}/${formattedName}`);
     } catch (err) {
@@ -52,7 +56,7 @@
         type="text"
         id="summonerName"
         bind:value={summonerName}
-        placeholder="Summoner Name#TAG"
+        placeholder="SummonerName#TAG"
         class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
       />
     </div>
