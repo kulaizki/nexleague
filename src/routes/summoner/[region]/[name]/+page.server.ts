@@ -27,7 +27,7 @@ export const load: PageServerLoad = async ({ params }) => {
     
     const summoner = await getSummonerByRiotId(region, gameName, tagLine);
     const leagueEntries = await getLeagueEntries(region, summoner.id);
-    const matchIds = await getMatchIds(region, summoner.puuid, 10);
+    const matchIds = await getMatchIds(region, summoner.puuid, 30);
     
     const matches = await Promise.all(
       matchIds.slice(0, 30).map(id => getMatch(region, id))
@@ -62,6 +62,6 @@ export const load: PageServerLoad = async ({ params }) => {
     };
   } catch (err) {
     console.error('Error processing summoner data:', err);
-    throw error(500, 'Failed to fetch summoner data');
+    throw error(500, 'Failed to fetch summoner data 1');
   }
 };
