@@ -7,27 +7,13 @@ import {
   getMatch, 
   getChampionMastery 
 } from '$lib/services/riotApi';
-import { analyzePlayerData } from '$lib/services/geminiApi';
+import { fetchAnalysis } from '$lib/services/geminiApi';
 
 export const GET: RequestHandler = async ({ params }) => {
   try {
-    const { region, name } = params;
+    const { region, gameName, tagLine } = params;
     
-    // Decode the URL-encoded name
-    const decodedName = decodeURIComponent(name);
-    
-    // Parse name and tag from the format "name#tag"
-    let gameName, tagLine;
-    
-    if (decodedName.includes('#')) {
-      [gameName, tagLine] = decodedName.split('#');
-    } else {
-      // Handle legacy format (no #)
-      gameName = decodedName;
-      tagLine = 'NA1'; // Default tag if not provided
-    }
-    
-    if (!gameName) {
+    if (!gameName || !tagLine) {
       return json({ error: 'Invalid summoner name format' }, { status: 400 });
     }
     
@@ -50,7 +36,7 @@ export const GET: RequestHandler = async ({ params }) => {
     };
     
     // Analyze player data using Gemini API
-    const analysis = await analyzePlayerData(playerData);
+    const analysis = await fetchAnalysis(playerData);
     
     return json({
       summoner,

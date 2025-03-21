@@ -6,22 +6,14 @@ import {
   getMatch, 
   getChampionMastery 
 } from '$lib/services/riotApi';
-import { analyzePlayerData } from '$lib/services/geminiApi';
+import { fetchAnalysis } from '$lib/services/geminiApi';
 import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params }) => {
   try {
-    const { region, name } = params;
+    const { region, gameName, tagLine } = params;
     
-    // Decode the URL-encoded name
-    const decodedName = decodeURIComponent(name);
-    
-    // Parse name and tag from the format "name#tag"
-    const parts = decodedName.split('#');
-    const gameName = parts[0];
-    const tagLine = parts.length > 1 ? parts[1] : 'NA1'; // Default tag if not provided
-    
-    if (!gameName) {
+    if (!gameName || !tagLine) {
       throw error(400, 'Invalid summoner name format');
     }
     
@@ -51,7 +43,7 @@ export const load: PageServerLoad = async ({ params }) => {
     };
     
     // Analyze player data using Gemini API
-    const analysis = await analyzePlayerData(playerData);
+    const analysis = await fetchAnalysis(playerData);
     
     return {
       summoner,
@@ -62,6 +54,6 @@ export const load: PageServerLoad = async ({ params }) => {
     };
   } catch (err) {
     console.error('Error processing summoner data:', err);
-    throw error(500, 'Failed to fetch summoner data 1');
+    throw error(500, 'Failed to fetch summoner data');
   }
 };

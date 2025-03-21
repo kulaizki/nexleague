@@ -10,18 +10,27 @@
   let error = '';
   
   const regions = [
+    // Americas
     { label: 'North America', value: 'North America', platform: 'na1', regional: 'americas' },
+    { label: 'Brazil', value: 'Brazil', platform: 'br1', regional: 'americas' },
+    { label: 'LAN', value: 'LAN', platform: 'la1', regional: 'americas' },
+    { label: 'LAS', value: 'LAS', platform: 'la2', regional: 'americas' },
+    
+    // Europe
     { label: 'Europe West', value: 'Europe West', platform: 'euw1', regional: 'europe' },
     { label: 'Europe Nordic & East', value: 'Europe Nordic & East', platform: 'eun1', regional: 'europe' },
-    { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'sea' },
-    { label: 'Korea', value: 'Korea', platform: 'kr', regional: 'asia' },
-    { label: 'Japan', value: 'Japan', platform: 'jp1', regional: 'asia' },
-    { label: 'Brazil', value: 'Brazil', platform: 'br1', regional: 'americas' },
-    { label: 'LAS', value: 'LAS', platform: 'la2', regional: 'americas' },
-    { label: 'LAN', value: 'LAN', platform: 'la1', regional: 'americas' },
     { label: 'Russia', value: 'Russia', platform: 'ru', regional: 'europe' },
     { label: 'Türkiye', value: 'Türkiye', platform: 'tr1', regional: 'europe' },
-    { label: 'Southeast Asia', value: 'Southeast Asia', platform: 'sg2', regional: 'sea' }, 
+    
+    // Asia
+    { label: 'Korea', value: 'Korea', platform: 'kr', regional: 'asia' },
+    { label: 'Japan', value: 'Japan', platform: 'jp1', regional: 'asia' },
+    
+    // SEA
+    { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'sea' },
+    { label: 'Philippines', value: 'Philippines', platform: 'ph2', regional: 'sea' },
+    { label: 'Singapore', value: 'Singapore', platform: 'sg2', regional: 'sea' },
+    { label: 'Thailand', value: 'Thailand', platform: 'th2', regional: 'sea' },
     { label: 'Taiwan', value: 'Taiwan', platform: 'tw2', regional: 'sea' },
     { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' }
   ];
@@ -45,10 +54,8 @@
       const selectedRegion = regions.find(r => r.value === region);
       const platformId = selectedRegion?.platform || 'na1'; // Fallback to na1 if not found
       
-      // Combine gameName and tagLine with # in between
-      const riotId = `${encodeURIComponent(gameName.trim())}%23${encodeURIComponent(tagLine.trim())}`;
-      
-      goto(`/summoner/${platformId}/${riotId}`);
+      // Pass gameName and tagLine separately in the URL
+      goto(`/summoner/${platformId}/${encodeURIComponent(gameName.trim())}/${encodeURIComponent(tagLine.trim())}`);
     } catch (err) {
       console.error('Error:', err);
       error = 'An error occurred. Please try again.';
