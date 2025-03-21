@@ -1,54 +1,25 @@
-import { GEMINI_API_KEY } from '$env/static/private';
-
 /**
- * Function to analyze player data using Google's Gemini API
- * @param playerData - The player data to analyze
- * @returns The analysis results
+ * Fetches analysis of player data from the server's analyze API route.
+ * @param playerData - The player data to analyze.
+ * @returns A promise that resolves to the analysis result.
  */
-export async function analyzePlayerData(playerData: any): Promise<any> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
-  
-  const prompt = `
-    You are a League of Legends expert coach analyzing a player's profile. 
-    Please provide a concise, personalized analysis of this player's performance, playstyle, and strengths.
-    
-    Be specific, supportive, and offer genuine compliments about their play style, champion choices, or skills.
-    Keep your analysis to 3-4 paragraphs maximum.
-    
-    Here's the player data:
-    ${JSON.stringify(playerData, null, 2)}
-    
-    In your analysis, include:
-    1. A brief overview of their rank and experience
-    2. Their main roles and champion preferences
-    3. Specific strengths in their gameplay
-    4. One encouraging suggestion for improvement
-    
-    Format your response as markdown.
-  `;
-  
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text: prompt
-            }
-          ]
-        }
-      ]
-    })
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Failed to analyze player data: ${response.status}`);
+export async function fetchAnalysis(playerData: any): Promise<string> {
+  try {
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ playerData }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch analysis');
+    }
+
+    const data = await response.json();
+    return data.analysis || 'No analysis available at this time.';
+  } catch (err) {
+    throw new Error((err as Error).message);
   }
-  
-  const data = await response.json();
-  return data.candidates[0].content.parts[0].text;
 }
