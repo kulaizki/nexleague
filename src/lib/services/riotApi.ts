@@ -1,71 +1,8 @@
 import { LEAGUE_API_KEY } from '$env/static/private';
-
-export interface Summoner {
-  id: string;
-  accountId: string;
-  puuid: string;
-  name: string;
-  profileIconId: number;
-  revisionDate: number;
-  summonerLevel: number;
-  gameName?: string;
-  tagLine?: string;
-}
-
-export interface RiotAccount {
-  puuid: string;
-  gameName: string;
-  tagLine: string;
-}
-
-export interface LeagueEntry {
-  leagueId: string;
-  summonerId: string;
-  summonerName: string;
-  queueType: string;
-  tier: string;
-  rank: string;
-  leaguePoints: number;
-  wins: number;
-  losses: number;
-  veteran: boolean;
-  inactive: boolean;
-  freshBlood: boolean;
-  hotStreak: boolean;
-}
-
-export interface Match {
-  metadata: {
-    matchId: string;
-    participants: string[];
-  };
-  info: {
-    gameCreation: number;
-    gameDuration: number;
-    gameMode: string;
-    participants: MatchParticipant[];
-  };
-}
-
-export interface MatchParticipant {
-  summonerId: string;
-  summonerName: string;
-  puuid: string;
-  participantId: number;
-  championId: number;
-  championName: string;
-  kills: number;
-  deaths: number;
-  assists: number;
-  totalDamageDealtToChampions: number;
-  totalDamageTaken: number;
-  goldEarned: number;
-  visionScore: number;
-  win: boolean;
-  role: string;
-  lane: string;
-  totalMinionsKilled: number;
-}
+import type { Summoner } from '$types/summoner';
+import type { RiotAccount } from '$types/riotAccount';
+import type { LeagueEntry } from '$types/leagueEntry';
+import type { Match } from '$types/match';
 
 const regionMapping: Record<string, string> = {
   'na1': 'americas',
@@ -135,7 +72,7 @@ export const getLeagueEntries = async (region: string, summonerId: string): Prom
   return await fetchFromRiotAPI(url);
 };
 
-// get match IDs for a summoner
+// Get match IDs for a summoner
 export async function getMatchIds(region: string, puuid: string, count: number = 20): Promise<string[]> {
   const routingRegion = getRegionalRouting(region);
   const url = `https://${routingRegion}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?count=${count}`;
@@ -153,7 +90,7 @@ export async function getMatchIds(region: string, puuid: string, count: number =
   return await response.json();
 }
 
-// get match data
+// Get match data
 export async function getMatch(region: string, matchId: string): Promise<Match> {
   const routingRegion = getRegionalRouting(region);
   const url = `https://${routingRegion}.api.riotgames.com/lol/match/v5/matches/${matchId}`;
@@ -171,7 +108,7 @@ export async function getMatch(region: string, matchId: string): Promise<Match> 
   return await response.json();
 }
 
-// get champion mastery for a summoner
+// Get champion mastery for a summoner
 export async function getChampionMastery(region: string, summonerId: string): Promise<any[]> {
   const url = `${getBaseUrl(region)}/champion-mastery/v4/champion-masteries/by-summoner/${summonerId}`;
   const response = await fetch(url, {
