@@ -83,7 +83,7 @@
     
     <button
       type="submit"
-      class="hover:cursor-pointer w-full py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+      class="hover:cursor-pointer w-full py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
       disabled={loading}
     >
       {#if loading}
