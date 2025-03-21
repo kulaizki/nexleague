@@ -63,7 +63,7 @@
         type="text"
         id="summonerName"
         bind:value={summonerName}
-        placeholder="SummonerName#TAG"
+        placeholder="RiotID#TAG"
         class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
       />
     </div>
