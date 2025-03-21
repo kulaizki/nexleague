@@ -35,10 +35,16 @@
     loading = true;
     
     try {
-      const formattedName = encodeURIComponent(summonerName.trim());
       // Find the selected region's platform ID for the URL
       const selectedRegion = regions.find(r => r.value === region);
       const platformId = selectedRegion?.platform || 'na1'; // Fallback to na1 if not found
+      
+      // Format the name properly (keeping # if it exists)
+      let formattedName = summonerName.trim();
+      
+      // URL encode the entire name (including # if present)
+      formattedName = encodeURIComponent(formattedName);
+      
       goto(`/summoner/${platformId}/${formattedName}`);
     } catch (err) {
       console.error('Error:', err);

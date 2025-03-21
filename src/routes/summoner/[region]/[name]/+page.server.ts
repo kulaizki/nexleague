@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { 
-  getSummonerByName, 
+  getSummonerByRiotId, 
   getLeagueEntries, 
   getMatchIds, 
   getMatch, 
@@ -13,14 +13,19 @@ export const load: PageServerLoad = async ({ params }) => {
   try {
     const { region, name } = params;
     
+    // Decode the URL-encoded name
+    const decodedName = decodeURIComponent(name);
+    
     // Parse name and tag from the format "name#tag"
-    const [gameName, tagLine] = name.split('#');
+    const parts = decodedName.split('#');
+    const gameName = parts[0];
+    const tagLine = parts.length > 1 ? parts[1] : 'NA1'; // Default tag if not provided
     
     if (!gameName) {
       throw error(400, 'Invalid summoner name format');
     }
     
-    const summoner = await getSummonerByName(region, gameName);
+    const summoner = await getSummonerByRiotId(region, gameName, tagLine);
     const leagueEntries = await getLeagueEntries(region, summoner.id);
     const matchIds = await getMatchIds(region, summoner.puuid, 10);
     
@@ -40,7 +45,7 @@ export const load: PageServerLoad = async ({ params }) => {
         gameMode: match.info.gameMode,
         gameDuration: match.info.gameDuration,
         gameCreation: match.info.gameCreation,
-        playerStats: match.info.participants.find(p => p.summonerId === summoner.id)
+        playerStats: match.info.participants.find(p => p.puuid === summoner.puuid)
       })),
       championMastery: championMastery.slice(0, 10)
     };

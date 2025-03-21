@@ -11,17 +11,19 @@
   onMount(async () => {
     try {
       const { region, name } = $page.params;
-      const response = await fetch(`/summoner/${region}/${name}`);
+      // Use the API endpoint to get data
+      const response = await fetch(`/api/summoner/${region}/${name}`);
       
       if (!response.ok) {
-        throw new Error(`Failed to fetch summoner data: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Failed to fetch summoner data: ${response.status}`);
       }
       
       playerData = await response.json();
       loading = false;
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error:', err);
-      error = 'Failed to load summoner profile. Please try again.';
+      error = err.message || 'Failed to load summoner profile. Please try again.';
       loading = false;
     }
   });
