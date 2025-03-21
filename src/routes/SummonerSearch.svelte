@@ -4,27 +4,25 @@
   import { fade } from 'svelte/transition';
   
   let summonerName = '';
-  let region = 'na1';
+  let region = 'North America'; // Default to a user-friendly name
   let loading = false;
   let error = '';
   
   const regions = [
-    { value: 'br1', label: 'Brazil (BR1)' },
-    { value: 'eun1', label: 'Europe Nordic & East (EUN1)' },
-    { value: 'euw1', label: 'Europe West (EUW1)' },
-    { value: 'jp1', label: 'Japan (JP1)' },
-    { value: 'kr', label: 'Korea (KR)' },
-    { value: 'la1', label: 'Latin America North (LA1)' },
-    { value: 'la2', label: 'Latin America South (LA2)' },
-    { value: 'na1', label: 'North America (NA1)' },
-    { value: 'oc1', label: 'Oceania (OC1)' },
-    { value: 'ru', label: 'Russia (RU)' },
-    { value: 'tr1', label: 'Turkey (TR1)' },
-    { value: 'ph2', label: 'Philippines (PH2)' },
-    { value: 'sg2', label: 'Singapore/Malaysia (SG2)' },
-    { value: 'th2', label: 'Thailand (TH2)' },
-    { value: 'tw2', label: 'Taiwan (TW2)' },
-    { value: 'vn2', label: 'Vietnam (VN2)' }
+    { label: 'North America', value: 'North America', platform: 'na1', regional: 'americas' },
+    { label: 'Europe West', value: 'Europe West', platform: 'euw1', regional: 'europe' },
+    { label: 'Europe Nordic & East', value: 'Europe Nordic & East', platform: 'eun1', regional: 'europe' },
+    { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'sea' },
+    { label: 'Korea', value: 'Korea', platform: 'kr', regional: 'asia' },
+    { label: 'Japan', value: 'Japan', platform: 'jp1', regional: 'asia' },
+    { label: 'Brazil', value: 'Brazil', platform: 'br1', regional: 'americas' },
+    { label: 'LAS', value: 'LAS', platform: 'la2', regional: 'americas' },
+    { label: 'LAN', value: 'LAN', platform: 'la1', regional: 'americas' },
+    { label: 'Russia', value: 'Russia', platform: 'ru', regional: 'europe' },
+    { label: 'Türkiye', value: 'Türkiye', platform: 'tr1', regional: 'europe' },
+    { label: 'Southeast Asia', value: 'Southeast Asia', platform: 'sg2', regional: 'sea' }, 
+    { label: 'Taiwan', value: 'Taiwan', platform: 'tw2', regional: 'sea' },
+    { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' }
   ];
   
   async function handleSubmit() {
@@ -38,7 +36,10 @@
     
     try {
       const formattedName = encodeURIComponent(summonerName.trim());
-      goto(`/summoner/${region}/${formattedName}`);
+      // Find the selected region's platform ID for the URL
+      const selectedRegion = regions.find(r => r.value === region);
+      const platformId = selectedRegion?.platform || 'na1'; // Fallback to na1 if not found
+      goto(`/summoner/${platformId}/${formattedName}`);
     } catch (err) {
       console.error('Error:', err);
       error = 'An error occurred. Please try again.';
