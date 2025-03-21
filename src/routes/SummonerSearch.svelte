@@ -3,7 +3,8 @@
   import { goto } from '$app/navigation';
   import { fade } from 'svelte/transition';
   
-  let summonerName = '';
+  let gameName = '';
+  let tagLine = '';
   let region = 'Southeast Asia';
   let loading = false;
   let error = '';
@@ -26,8 +27,13 @@
   ];
   
   async function handleSubmit() {
-    if (!summonerName.trim()) {
-      error = 'Please enter a Riot ID';
+    if (!gameName.trim()) {
+      error = 'Please enter a Game Name';
+      return;
+    }
+    
+    if (!tagLine.trim()) {
+      error = 'Please enter a Tagline';
       return;
     }
     
@@ -39,13 +45,10 @@
       const selectedRegion = regions.find(r => r.value === region);
       const platformId = selectedRegion?.platform || 'na1'; // Fallback to na1 if not found
       
-      // Format the name properly (keeping # if it exists)
-      let formattedName = summonerName.trim();
+      // Combine gameName and tagLine with # in between
+      const riotId = `${encodeURIComponent(gameName.trim())}%23${encodeURIComponent(tagLine.trim())}`;
       
-      // URL encode the entire name (including # if present)
-      formattedName = encodeURIComponent(formattedName);
-      
-      goto(`/summoner/${platformId}/${formattedName}`);
+      goto(`/summoner/${platformId}/${riotId}`);
     } catch (err) {
       console.error('Error:', err);
       error = 'An error occurred. Please try again.';
@@ -58,14 +61,26 @@
 <div class="w-full max-w-md mx-auto mt-8">
   <form on:submit|preventDefault={handleSubmit} class="space-y-4">
     <div class="flex flex-col">
-      <label for="summonerName" class="text-lg font-medium text-gray-200 mb-2">Enter Riot ID</label>
-      <input
-        type="text"
-        id="summonerName"
-        bind:value={summonerName}
-        placeholder="RiotID#TAG"
-        class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-      />
+      <label for="riotId" class="text-lg font-medium text-gray-200 mb-2">Enter Riot ID</label>
+      <div class="flex items-center">
+        <input
+          type="text"
+          id="gameName"
+          bind:value={gameName}
+          placeholder="Game Name"
+          class="flex-grow px-4 py-3 rounded-l-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+        <div class="flex items-center justify-center px-2 py-3 bg-gray-800 text-white font-medium border-t border-b border-gray-600">
+          #
+        </div>
+        <input
+          type="text"
+          id="tagLine"
+          bind:value={tagLine}
+          placeholder="TAG"
+          class="flex-grow-0 w-24 px-4 py-3 rounded-r-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        />
+      </div>
     </div>
     
     <div class="flex flex-col">
