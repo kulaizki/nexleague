@@ -50,7 +50,7 @@
     try {
       // Find the selected region's platform ID for the URL
       const selectedRegion = regions.find(r => r.value === region);
-      const platformId = selectedRegion?.platform || 'sg2'; // Fallback to na1 if not found
+      const platformId = selectedRegion?.platform || 'sg2'; 
       
       // Pass gameName and tagLine separately in the URL
       goto(`/summoner/${platformId}/${encodeURIComponent(gameName.trim())}/${encodeURIComponent(tagLine.trim())}`);
