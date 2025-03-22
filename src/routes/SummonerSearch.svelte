@@ -15,22 +15,20 @@
     { label: 'Brazil', value: 'Brazil', platform: 'br1', regional: 'americas' },
     { label: 'LAN', value: 'LAN', platform: 'la1', regional: 'americas' },
     { label: 'LAS', value: 'LAS', platform: 'la2', regional: 'americas' },
-    
+
     // Europe
     { label: 'Europe West', value: 'Europe West', platform: 'euw1', regional: 'europe' },
     { label: 'Europe Nordic & East', value: 'Europe Nordic & East', platform: 'eun1', regional: 'europe' },
     { label: 'Russia', value: 'Russia', platform: 'ru', regional: 'europe' },
     { label: 'Türkiye', value: 'Türkiye', platform: 'tr1', regional: 'europe' },
-    
+
     // Asia
     { label: 'Korea', value: 'Korea', platform: 'kr', regional: 'asia' },
     { label: 'Japan', value: 'Japan', platform: 'jp1', regional: 'asia' },
-    
+
     // SEA
+    { label: 'Southeast Asia', value: 'Southeast Asia', platform: 'sg2', regional: 'sea' },
     { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'sea' },
-    { label: 'Philippines', value: 'Philippines', platform: 'ph2', regional: 'sea' },
-    { label: 'Singapore', value: 'Singapore', platform: 'sg2', regional: 'sea' },
-    { label: 'Thailand', value: 'Thailand', platform: 'th2', regional: 'sea' },
     { label: 'Taiwan', value: 'Taiwan', platform: 'tw2', regional: 'sea' },
     { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' }
   ];
@@ -52,7 +50,7 @@
     try {
       // Find the selected region's platform ID for the URL
       const selectedRegion = regions.find(r => r.value === region);
-      const platformId = selectedRegion?.platform || 'na1'; // Fallback to na1 if not found
+      const platformId = selectedRegion?.platform || 'sg2'; // Fallback to na1 if not found
       
       // Pass gameName and tagLine separately in the URL
       goto(`/summoner/${platformId}/${encodeURIComponent(gameName.trim())}/${encodeURIComponent(tagLine.trim())}`);
