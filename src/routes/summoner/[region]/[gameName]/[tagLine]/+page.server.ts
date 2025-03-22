@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ params }) => {
       gameName: string; 
       tagLine: string 
     };    
-    
+
     if (!gameName || !tagLine) {
       console.error('Invalid summoner name format:', { gameName, tagLine });
       throw error(400, 'Invalid summoner name format');
@@ -33,12 +33,12 @@ export const load: PageServerLoad = async ({ params }) => {
     console.log('League entries fetched:', leagueEntries);
     
     console.log('Fetching match IDs...');
-    const matchIds = await getMatchIds(region, summoner.puuid, 30);
+    const matchIds = await getMatchIds(region, summoner.puuid, 10);
     console.log('Match IDs fetched:', matchIds);
     
     console.log('Fetching match details...');
     const matches = await Promise.all(
-      matchIds.slice(0, 30).map(id => getMatch(region, id))
+      matchIds.slice(0, 10).map(id => getMatch(region, id))
     );
     console.log('Match details fetched:', matches);
     

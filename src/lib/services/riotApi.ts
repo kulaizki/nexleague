@@ -95,7 +95,7 @@ export const getLeagueEntries = async (region: string, summonerId: string): Prom
   return result;
 };
 
-export const getMatchIds = async (region: string, puuid: string, count: number = 30): Promise<string[]> => {
+export const getMatchIds = async (region: string, puuid: string, count: number = 10): Promise<string[]> => {
   // console.log(`getMatchIds called with region: ${region}, puuid: ${puuid}, count: ${count}`);
   const routingRegion = getRegionalRouting(region);
   const url = `https://${routingRegion}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?count=${count}`;

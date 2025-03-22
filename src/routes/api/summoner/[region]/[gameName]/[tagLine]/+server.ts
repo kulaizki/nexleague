@@ -19,10 +19,10 @@ export const GET: RequestHandler = async ({ params }) => {
     
     const summoner = await getSummonerByRiotId(region, gameName, tagLine);
     const leagueEntries = await getLeagueEntries(region, summoner.id);
-    const matchIds = await getMatchIds(region, summoner.puuid, 30);
+    const matchIds = await getMatchIds(region, summoner.puuid, 10);
     
     const matches = await Promise.all(
-      matchIds.slice(0, 30).map(id => getMatch(region, id))
+      matchIds.slice(0, 10).map(id => getMatch(region, id))
     );
     
     const championMastery = await getChampionMastery(region, summoner.id);
@@ -41,7 +41,7 @@ export const GET: RequestHandler = async ({ params }) => {
     return json({
       summoner,
       leagueEntries,
-      matches: matches.slice(0, 30),
+      matches: matches.slice(0, 10),
       championMastery: championMastery.slice(0, 10),
       analysis
     });
