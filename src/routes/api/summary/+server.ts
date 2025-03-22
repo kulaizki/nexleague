@@ -37,7 +37,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     return json({ summary });
   } catch (error) {
-    console.error('Error in analyze API:', error);
+    console.error('Error in summary API:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return json({ error: errorMessage }, { status: 500 });
   }

@@ -18,7 +18,8 @@ export async function fetchAnalysis(playerData: any): Promise<string> {
     }
 
     const data = await response.json();
-    return data.analysis || 'No analysis available at this time.';
+    return data.summary || 'No analysis available at this time.';
+    console.log(data.summary);
   } catch (err) {
     throw new Error((err as Error).message);
   }
