@@ -132,14 +132,14 @@
   <div class="p-6">
     {#if activeTab === 'overview'}
       <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-green-500">Player Analysis</h2>
+        <h2 class="text-2xl font-bold mb-4 text-green-500 [text-shadow:0_0_8px_rgba(74,222,128,0.5)]">Player Analysis</h2>
         <div class="prose prose-lg prose-invert max-w-none">
           <Markdown md={analysis} />
         </div>
       </div>
     {:else if activeTab === 'matches'}
       <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-green-500">Recent Matches</h2>
+        <h2 class="text-2xl font-bold mb-4 text-green-500 [text-shadow:0_0_8px_rgba(74,222,128,0.6)]">Recent Matches</h2>
         
         {#if matches && matches.length > 0}
           <div class="space-y-4">
@@ -161,7 +161,7 @@
       </div>
     {:else if activeTab === 'champions'}
       <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-green-500">Champion Mastery</h2>
+        <h2 class="text-2xl font-bold mb-4 text-green-500 [text-shadow:0_0_8px_rgba(74,222,128,0.6)]">Champion Mastery</h2>
         
         {#if championMastery && championMastery.length > 0 && championIdMap && Object.keys(championIdMap).length > 0}
           <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
