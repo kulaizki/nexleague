@@ -61,9 +61,9 @@
   }
 </script>
 
-<div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+<div class="bg-gray-900 rounded-lg overflow-hidden shadow-lg">
   <!-- Profile Header -->
-  <div class="bg-gradient-to-r from-gray-900 to-gray-800 p-6">
+  <div class="bg-gradient-to-r from-gray-900 to-sky-700 p-6">
     <div class="flex flex-col md:flex-row items-center gap-6">
       <div class="flex-shrink-0">
         <div class="rounded-full h-24 w-24 overflow-hidden border-4 border-sky-300">
@@ -107,21 +107,21 @@
   </div>
   
   <!-- Tab Navigation -->
-  <div class="bg-gray-900 px-4 flex overflow-x-auto">
+  <div class="border-t-2 border-gray-800 bg-gray-900 px-4 flex overflow-x-auto">
     <button 
-      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'overview' ? 'border-sky-500 text-sky-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'overview' ? 'border-sky-500 text-sky-400' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'overview'}
     >
       Overview
     </button>
     <button 
-      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'matches' ? 'border-sky-500 text-sky-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'matches' ? 'border-sky-500 text-sky-400' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'matches'}
     >
       Recent Matches
     </button>
     <button 
-      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'champions' ? 'border-sky-500 text-sky-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'champions' ? 'border-sky-500 text-sky-400' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'champions'}
     >
       Champions
