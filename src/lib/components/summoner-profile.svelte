@@ -66,7 +66,7 @@
   <div class="bg-gradient-to-r from-gray-900 to-gray-800 p-6">
     <div class="flex flex-col md:flex-row items-center gap-6">
       <div class="flex-shrink-0">
-        <div class="rounded-full h-24 w-24 overflow-hidden border-4 border-green-500">
+        <div class="rounded-full h-24 w-24 overflow-hidden border-4 border-sky-300">
           <img 
             src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/profileicon/${summoner.profileIconId}.png`}
             alt="Summoner Icon"
