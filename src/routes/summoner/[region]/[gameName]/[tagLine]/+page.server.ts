@@ -43,7 +43,7 @@ async function getChampionIdMap(version: string, fetchFn: typeof fetch): Promise
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
   try {
-    console.log('load function called with params:', params);
+    // console.log('load function called with params:', params);
     
     const { region, gameName, tagLine } = params as { 
       region: string; 
@@ -59,15 +59,15 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const ddragonVersionPromise = getLatestDDragonVersion(fetch);
     const championMapPromise = ddragonVersionPromise.then(version => getChampionIdMap(version, fetch));
     
-    console.log('Fetching summoner data...');
+    // console.log('Fetching summoner data...');
     const summonerPromise = getSummonerByRiotId(region, gameName, tagLine);
     
     // Wait for summoner data first as other calls depend on it
     const summoner = await summonerPromise;
-    console.log('Summoner data fetched:', summoner);
+    // console.log('Summoner data fetched:', summoner);
 
     // Fetch remaining Riot API data concurrently
-    console.log('Fetching league entries, match IDs, champion mastery...');
+    // console.log('Fetching league entries, match IDs, champion mastery...');
     const leagueEntriesPromise = getLeagueEntries(region, summoner.id);
     const matchIdsPromise = getMatchIds(region, summoner.puuid, 10); 
     const championMasteryPromise = getChampionMastery(region, summoner.puuid);
@@ -80,29 +80,29 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
       championMapPromise
     ]);
 
-    console.log('League entries fetched:', leagueEntries.length);
-    console.log('Match IDs fetched:', matchIds.length);
-    console.log('Champion mastery data fetched:', championMastery.length);
-    console.log('Latest DDragon version:', latestDDragonVersion);
-    console.log(`Champion ID Map created with ${Object.keys(championIdMap).length} entries.`);
+    // console.log('League entries fetched:', leagueEntries.length);
+    // console.log('Match IDs fetched:', matchIds.length);
+    // console.log('Champion mastery data fetched:', championMastery.length);
+    // console.log('Latest DDragon version:', latestDDragonVersion);
+    // console.log(`Champion ID Map created with ${Object.keys(championIdMap).length} entries.`);
     
-    console.log('Fetching match details for analysis (latest 5)...');
+    // console.log('Fetching match details for analysis (latest 5)...');
     const analysisMatchIds = matchIds.slice(0, 10);
     const analysisMatches = await Promise.all(
         analysisMatchIds.map(id => getMatch(region, id))
     );
-    console.log('Analysis match details fetched:', analysisMatches.length);
+    // console.log('Analysis match details fetched:', analysisMatches.length);
 
     // Fetch details for all 10 matches for display
-    console.log('Fetching match details for display (up to 10)...');
+    // console.log('Fetching match details for display (up to 10)...');
     const displayMatches = matchIds.length > 5 
         ? await Promise.all(matchIds.slice(5, 10).map(id => getMatch(region, id)))
         : [];
     const allMatchesForDisplay = [...analysisMatches, ...displayMatches];
-    console.log('Total matches fetched for display:', allMatchesForDisplay.length);
+    // console.log('Total matches fetched for display:', allMatchesForDisplay.length);
 
     // Prepare a *more concise* player data object specifically for analysis
-    console.log('Preparing concise player data for analysis...');
+    // console.log('Preparing concise player data for analysis...');
     const playerDataForAnalysis = {
       summoner: {
         name: summoner.gameName ? `${summoner.gameName}#${summoner.tagLine}` : summoner.name, // Use Riot ID if available
@@ -136,12 +136,12 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
         points: m.championPoints
       }))
     };
-    console.log('Concise player data prepared for analysis.');
+    // console.log('Concise player data prepared for analysis.');
     
     // Analyze player data using Gemini API
-    console.log('Fetching analysis from Gemini API...');
+    // console.log('Fetching analysis from Gemini API...');
     const analysis = await fetchAnalysis(playerDataForAnalysis, fetch); // Pass the concise data
-    console.log('Analysis fetched.');
+    // console.log('Analysis fetched.');
     
     // pass data to page
     return {

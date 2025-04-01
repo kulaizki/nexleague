@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
+  import Markdown from 'svelte-exmarkdown';
   
   interface Summoner {
     name: string;
@@ -176,7 +177,7 @@
       <div transition:fly={{ y: 10, duration: 200 }}>
         <h2 class="text-2xl font-bold mb-4 text-green-500">Player Analysis</h2>
         <div class="prose prose-lg prose-invert max-w-none">
-          {@html analysis}
+          <Markdown md={analysis} />
         </div>
       </div>
     {:else if activeTab === 'matches'}
@@ -295,3 +296,14 @@
     {/if}
   </div>
 </div>
+
+<style>
+	:global(p) {
+		margin-bottom: 1em;
+		line-height: 1.6;
+	}
+
+	:global(strong) {
+		color: rgb(71, 160, 255);
+	}
+</style>

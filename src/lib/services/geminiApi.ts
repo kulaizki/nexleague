@@ -17,7 +17,7 @@ export async function fetchAnalysis(playerData: any, fetch: any): Promise<string
       throw new Error('Failed to fetch analysis');
     }
     const data = await response.json();
-    console.log('Analysis response:', data.summary);
+    // console.log('Analysis response:', data.summary);
     return data.summary || 'No analysis available at this time.';
   } catch (err) {
     throw new Error((err as Error).message);

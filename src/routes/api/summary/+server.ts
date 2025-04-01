@@ -5,7 +5,6 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    // Destructure the entire playerData object from the request body
     const { playerData } = await request.json(); 
     
     // Basic validation
@@ -13,19 +12,23 @@ export const POST: RequestHandler = async ({ request }) => {
       return json({ error: 'Invalid player data received' }, { status: 400 });
     }
     
-    console.log('Received player data keys in /api/summary:', Object.keys(playerData));
-
     // Initialize the Gemini API client
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' }); 
 
     const prompt = `
       You are a League of Legends expert coach analyzing a player's profile data.
+
+      Use third person e.g., "This player is good at midlane" instead of "You are good at midlane.
+      Don't include saying things about analyzing the data given e.g., "With the data available".
+      Don't use redundant words or phrases e.g., multiple "This player".
+
       Please provide a concise, personalized analysis of this player's performance, playstyle, and potential strengths.
 
       Be specific, supportive, and offer genuine compliments based on the data provided (rank, champion choices, match stats, mastery, etc.).
-      Keep your analysis to 3-4 paragraphs maximum.
+      Keep your analysis to 2 paragraphs always.
 
+      Format all champion names as **HeroName** (bold) so they can be styled distinctly.
       Here's the player data:
       ${JSON.stringify(playerData, null, 2)}
 
