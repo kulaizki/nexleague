@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
-  import Footer from '$lib/components/footer.svelte';
   import SummonerSearch from './summoner-search.svelte';
   
   let show: boolean = false;
@@ -37,19 +36,16 @@
   });
 </script>
 
-<div class="flex flex-col min-h-screen">
-  <section class="flex-grow flex flex-col items-center justify-center p-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-    {#if show}
-      <div class="max-w-7xl md:max-w-4xl text-center" transition:blurFly>
-        <h1 class="mb-4 text-4xl font-bold tracking-tight md:text-7xl">
-          welcome to <span class="text-green-500 [text-shadow:0_0_8px_rgba(0,255,17,.7)]">nexleague</span>
-        </h1>
-        <p class="mb-6 text-lg text-gray-300 md:text-xl">
-          Let's improve in League of Legends.
-        </p>
-        <SummonerSearch />
-      </div>
-    {/if}
-  </section>
-  <Footer />
-</div>
+<section class="flex-grow flex flex-col items-center justify-center p-8 text-white h-full">
+  {#if show}
+    <div class="max-w-7xl md:max-w-4xl text-center" transition:blurFly>
+      <h1 class="mb-4 text-4xl font-bold tracking-tight md:text-7xl">
+        welcome to <span class="text-green-500 [text-shadow:0_0_8px_rgba(0,255,17,.7)]">nexleague</span>
+      </h1>
+      <p class="mb-6 text-lg text-gray-300 md:text-xl">
+        Let's improve in League of Legends.
+      </p>
+      <SummonerSearch />
+    </div>
+  {/if}
+</section>
