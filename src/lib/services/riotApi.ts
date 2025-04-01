@@ -150,7 +150,6 @@ export const getSummonerByRiotId = async (platformId: string, gameName: string, 
     return result;
   } catch (error) {
     console.error(`Error fetching summoner data for ${gameName}#${tagLine} in region ${platformId}:`, error);
-    // Log which URL failed if possible
     if (error instanceof Error && error.message.includes('API request failed')) {
        console.error(`The failing URL might be related to: ${accountUrl} or the subsequent summoner call`);
     }
@@ -208,7 +207,6 @@ export const getMatch = async (region: string, matchId: string): Promise<Match> 
 export const getChampionMastery = async (region: string, puuid: string): Promise<any[]> => {
   console.log(`getChampionMastery called with region: ${region}, puuid: ${puuid}`);
   try {
-    // Notice the change from /by-summoner/{summonerId} to /by-puuid/{puuid}
     const url = `${getBaseUrl(region)}/champion-mastery/v4/champion-masteries/by-puuid/${puuid}`;
     const result = await fetchFromRiotAPI(url);
     return result;

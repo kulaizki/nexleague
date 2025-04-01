@@ -69,7 +69,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     // Fetch remaining Riot API data concurrently
     console.log('Fetching league entries, match IDs, champion mastery...');
     const leagueEntriesPromise = getLeagueEntries(region, summoner.id);
-    const matchIdsPromise = getMatchIds(region, summoner.puuid, 10);
+    const matchIdsPromise = getMatchIds(region, summoner.puuid, 10); 
     const championMasteryPromise = getChampionMastery(region, summoner.puuid);
 
     const [leagueEntries, matchIds, championMastery, latestDDragonVersion, championIdMap] = await Promise.all([
@@ -86,45 +86,75 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     console.log('Latest DDragon version:', latestDDragonVersion);
     console.log(`Champion ID Map created with ${Object.keys(championIdMap).length} entries.`);
     
-    console.log('Fetching match details...');
-    const matches = await Promise.all(
-      matchIds.slice(0, 10).map(id => getMatch(region, id))
+    console.log('Fetching match details for analysis (latest 5)...');
+    const analysisMatchIds = matchIds.slice(0, 10);
+    const analysisMatches = await Promise.all(
+        analysisMatchIds.map(id => getMatch(region, id))
     );
-    console.log('Match details fetched:', matches.length);
-    
-    // Prepare player data for analysis
-    console.log('Preparing player data for analysis...');
-    const playerData = {
-      summoner,
-      leagueEntries,
-      matches: matches.map(match => ({
-        matchId: match.metadata.matchId,
-        gameMode: match.info.gameMode,
-        gameDuration: match.info.gameDuration,
-        gameCreation: match.info.gameCreation,
-        playerStats: match.info.participants.find(p => p.puuid === summoner.puuid)
+    console.log('Analysis match details fetched:', analysisMatches.length);
+
+    // Fetch details for all 10 matches for display
+    console.log('Fetching match details for display (up to 10)...');
+    const displayMatches = matchIds.length > 5 
+        ? await Promise.all(matchIds.slice(5, 10).map(id => getMatch(region, id)))
+        : [];
+    const allMatchesForDisplay = [...analysisMatches, ...displayMatches];
+    console.log('Total matches fetched for display:', allMatchesForDisplay.length);
+
+    // Prepare a *more concise* player data object specifically for analysis
+    console.log('Preparing concise player data for analysis...');
+    const playerDataForAnalysis = {
+      summoner: {
+        name: summoner.gameName ? `${summoner.gameName}#${summoner.tagLine}` : summoner.name, // Use Riot ID if available
+        level: summoner.summonerLevel
+      },
+      ranks: leagueEntries.map(entry => ({ 
+          queue: entry.queueType, 
+          tier: `${entry.tier} ${entry.rank}`, 
+          lp: entry.leaguePoints, 
+          winRate: ((entry.wins / (entry.wins + entry.losses || 1)) * 100).toFixed(1) + '%'
       })),
-      championMastery: championMastery.slice(0, 10)
+      recentMatchesSummary: analysisMatches.map(match => {
+        const participant = match.info.participants.find(p => p.puuid === summoner.puuid);
+        return participant ? {
+          champion: participant.championName,
+          win: participant.win,
+          kda: `${participant.kills}/${participant.deaths}/${participant.assists}`,
+          cs: participant.totalMinionsKilled,
+          csPerMin: (participant.totalMinionsKilled / (match.info.gameDuration / 60)).toFixed(1),
+          visionScore: participant.visionScore,
+          role: participant.role,
+          lane: participant.lane,
+          gameMode: match.info.gameMode
+        } : null;
+      }).filter(m => m !== null), // Filter out potential nulls if participant not found
+      topMastery: championMastery.slice(0, 5).map(m => ({
+        championId: m.championId,
+        // Look up name, handle potential undefined
+        championName: championIdMap[m.championId.toString()] || 'Unknown',
+        level: m.championLevel,
+        points: m.championPoints
+      }))
     };
-    console.log('Player data prepared:', Object.keys(playerData));
+    console.log('Concise player data prepared for analysis.');
     
     // Analyze player data using Gemini API
     console.log('Fetching analysis from Gemini API...');
-    const analysis = await fetchAnalysis(playerData, fetch); // Pass the fetch function
+    const analysis = await fetchAnalysis(playerDataForAnalysis, fetch); // Pass the concise data
     console.log('Analysis fetched.');
     
+    // pass data to page
     return {
-      summoner,
-      leagueEntries,
-      matches,
-      championMastery: championMastery.slice(0, 10), // Still pass the original mastery data
-      analysis,
-      latestDDragonVersion, // Pass the version to the page
-      championIdMap // Pass the map to the page
+      summoner, 
+      leagueEntries, 
+      matches: allMatchesForDisplay, 
+      championMastery: championMastery.slice(0, 10), 
+      analysis, 
+      latestDDragonVersion, 
+      championIdMap
     };
   } catch (err) {
     console.error('Error in page server load:', err);
-    // Check if it's an error thrown by sveltekit or a generic error
     if (err && typeof err === 'object' && 'status' in err && 'message' in err) {
        throw error(err.status as number, err.message as string);
     } else if (err instanceof Error) {
