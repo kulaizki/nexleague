@@ -4,12 +4,12 @@ import {
   getLeagueEntries, 
   getMatchIds, 
   getMatch, 
-  getChampionMastery 
+  // getChampionMastery 
 } from '$lib/services/riotApi';
 import { fetchAnalysis } from '$lib/services/geminiApi';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, fetch }) => {
   try {
     console.log('load function called with params:', params);
     
@@ -18,7 +18,6 @@ export const load: PageServerLoad = async ({ params }) => {
       gameName: string; 
       tagLine: string 
     };    
-
     if (!gameName || !tagLine) {
       console.error('Invalid summoner name format:', { gameName, tagLine });
       throw error(400, 'Invalid summoner name format');
@@ -42,9 +41,9 @@ export const load: PageServerLoad = async ({ params }) => {
     );
     console.log('Match details fetched:', matches);
     
-    console.log('Fetching champion mastery data...');
-    const championMastery = await getChampionMastery(region, summoner.id);
-    console.log('Champion mastery data fetched:', championMastery);
+    // console.log('Fetching champion mastery data...');
+    // const championMastery = await getChampionMastery(region, summoner.id);
+    // console.log('Champion mastery data fetched:', championMastery);
     
     // Prepare player data for analysis
     console.log('Preparing player data for analysis...');
@@ -58,20 +57,20 @@ export const load: PageServerLoad = async ({ params }) => {
         gameCreation: match.info.gameCreation,
         playerStats: match.info.participants.find(p => p.puuid === summoner.puuid)
       })),
-      championMastery: championMastery.slice(0, 10)
+      // championMastery: championMastery.slice(0, 10)
     };
     console.log('Player data prepared:', playerData);
     
     // Analyze player data using Gemini API
     console.log('Fetching analysis from Gemini API...');
-    const analysis = await fetchAnalysis(playerData);
+    const analysis = await fetchAnalysis(playerData, fetch); // Pass the fetch function
     console.log('Analysis fetched:', analysis);
     
     return {
       summoner,
       leagueEntries,
       matches,
-      championMastery: championMastery.slice(0, 10),
+      // championMastery: championMastery.slice(0, 10),
       analysis
     };
   } catch (err) {

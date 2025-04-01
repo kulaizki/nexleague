@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
     // Initialize the Gemini API client
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // Prepare the prompt for the Gemini API
     const prompt = `
