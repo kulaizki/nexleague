@@ -5,7 +5,7 @@ import {
   getLeagueEntries, 
   getMatchIds, 
   getMatch, 
-  // getChampionMastery 
+  getChampionMastery 
 } from '$lib/services/riotApi';
 import { fetchAnalysis } from '$lib/services/geminiApi';
 
@@ -25,14 +25,14 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
       matchIds.slice(0, 10).map(id => getMatch(region, id))
     );
     
-    // const championMastery = await getChampionMastery(region, summoner.id);
+    const championMastery = await getChampionMastery(region, summoner.puuid);
     
     // Prepare player data for analysis
     const playerData = {
       summoner,
       leagueEntries,
       matches,
-      // championMastery
+      championMastery
     };
     
     // Analyze player data using Gemini API
@@ -42,7 +42,7 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
       summoner,
       leagueEntries,
       matches: matches.slice(0, 10),
-      // championMastery: championMastery.slice(0, 10),
+      championMastery: championMastery.slice(0, 10),
       analysis
     });
   } catch (error: any) {

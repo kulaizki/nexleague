@@ -4,7 +4,7 @@ import {
   getLeagueEntries, 
   getMatchIds, 
   getMatch, 
-  // getChampionMastery 
+  getChampionMastery 
 } from '$lib/services/riotApi';
 import { fetchAnalysis } from '$lib/services/geminiApi';
 import { error } from '@sveltejs/kit';
@@ -41,9 +41,9 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     );
     console.log('Match details fetched:', matches);
     
-    // console.log('Fetching champion mastery data...');
-    // const championMastery = await getChampionMastery(region, summoner.id);
-    // console.log('Champion mastery data fetched:', championMastery);
+    console.log('Fetching champion mastery data...');
+    const championMastery = await getChampionMastery(region, summoner.puuid);
+    console.log('Champion mastery data fetched:', championMastery);
     
     // Prepare player data for analysis
     console.log('Preparing player data for analysis...');
@@ -57,7 +57,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
         gameCreation: match.info.gameCreation,
         playerStats: match.info.participants.find(p => p.puuid === summoner.puuid)
       })),
-      // championMastery: championMastery.slice(0, 10)
+      championMastery: championMastery.slice(0, 10)
     };
     console.log('Player data prepared:', playerData);
     
@@ -70,7 +70,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
       summoner,
       leagueEntries,
       matches,
-      // championMastery: championMastery.slice(0, 10),
+      championMastery: championMastery.slice(0, 10),
       analysis
     };
   } catch (err) {

@@ -113,10 +113,15 @@ export const getMatch = async (region: string, matchId: string): Promise<Match> 
   return result;
 };
 
-export const getChampionMastery = async (region: string, summonerId: string): Promise<any[]> => {
-  console.log(`getChampionMastery called with region: ${region}, summonerId: ${summonerId}`);
-  const url = `${getBaseUrl(region)}/champion-mastery/v4/champion-masteries/by-summoner/${summonerId}`;
-  const result = await fetchFromRiotAPI(url);
-  // console.log(`getChampionMastery returning:`, result);
-  return result;
+export const getChampionMastery = async (region: string, puuid: string): Promise<any[]> => {
+  console.log(`getChampionMastery called with region: ${region}, puuid: ${puuid}`);
+  try {
+    // Notice the change from /by-summoner/{summonerId} to /by-puuid/{puuid}
+    const url = `${getBaseUrl(region)}/champion-mastery/v4/champion-masteries/by-puuid/${puuid}`;
+    const result = await fetchFromRiotAPI(url);
+    return result;
+  } catch (error) {
+    console.warn('Unable to fetch champion mastery data:', error);
+    return [];
+  }
 };
