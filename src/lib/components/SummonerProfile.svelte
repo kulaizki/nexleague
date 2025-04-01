@@ -138,19 +138,19 @@
   <!-- Tab Navigation -->
   <div class="bg-gray-900 px-4 flex overflow-x-auto">
     <button 
-      class="py-4 px-4 font-medium whitespace-nowrap border-b-2 {activeTab === 'overview' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap border-b-2 {activeTab === 'overview' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'overview'}
     >
       Overview
     </button>
     <button 
-      class="py-4 px-4 font-medium whitespace-nowrap border-b-2 {activeTab === 'matches' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap border-b-2 {activeTab === 'matches' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'matches'}
     >
       Recent Matches
     </button>
     <button 
-      class="py-4 px-4 font-medium whitespace-nowrap border-b-2 {activeTab === 'champions' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap border-b-2 {activeTab === 'champions' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'champions'}
     >
       Champions

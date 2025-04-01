@@ -15,6 +15,7 @@
     { label: 'Brazil', value: 'Brazil', platform: 'br1', regional: 'americas' },
     { label: 'LAN', value: 'LAN', platform: 'la1', regional: 'americas' },
     { label: 'LAS', value: 'LAS', platform: 'la2', regional: 'americas' },
+    { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'americas' },
 
     // Europe
     { label: 'Europe West', value: 'Europe West', platform: 'euw1', regional: 'europe' },
@@ -28,9 +29,10 @@
 
     // SEA
     { label: 'Southeast Asia', value: 'Southeast Asia', platform: 'sg2', regional: 'sea' },
-    { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'sea' },
     { label: 'Taiwan', value: 'Taiwan', platform: 'tw2', regional: 'sea' },
-    { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' }
+    { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' },
+    { label: 'Philippines', value: 'Philippines', platform: 'ph2', regional: 'sea' },
+    { label: 'Thailand', value: 'Thailand', platform: 'th2', regional: 'sea' }
   ];
   
   async function handleSubmit() {
@@ -50,7 +52,16 @@
     try {
       // Find the selected region's platform ID for the URL
       const selectedRegion = regions.find(r => r.value === region);
-      const platformId = selectedRegion?.platform || 'sg2'; 
+      
+      if (!selectedRegion) {
+        console.error(`Region "${region}" not found in regions list`);
+        error = 'Invalid region selected. Please try again.';
+        loading = false;
+        return;
+      }
+      
+      const platformId = selectedRegion.platform;
+      console.log(`Selected region: ${selectedRegion.label}, platformId: ${platformId}, regional: ${selectedRegion.regional}`);
       
       // Pass gameName and tagLine separately in the URL
       goto(`/summoner/${platformId}/${encodeURIComponent(gameName.trim())}/${encodeURIComponent(tagLine.trim())}`);
