@@ -36,10 +36,10 @@
 {#if show}
   <footer 
     class="py-4 md:py-2 bg-gray-900 border-t border-gray-600 text-white"
-    transition:slideUp
+    transition:slideUp|local
   >
-    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center">
-      <p class="text-sm mb-4 sm:mb-0">
+    <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-sm my-3">
         &copy; 2025 
         <a
           href="https://github.com/kulaizki"
