@@ -39,13 +39,13 @@
     transition:slideUp|local
   >
     <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-      <p class="text-sm my-3">
+      <p class="text-sm md:my-3">
         &copy; 2025 
         <a
           href="https://github.com/kulaizki"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-green-500 hover:underline"
+          class="font-bold text-green-500 hover:underline hover:text-green-300 transition ease-in-out duration-200"
         >
           kulaizki
         </a>. All rights reserved.

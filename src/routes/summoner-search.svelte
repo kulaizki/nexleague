@@ -56,7 +56,7 @@
       if (!selectedRegion) {
         console.error(`Region "${region}" not found in regions list`);
         error = 'Invalid region selected. Please try again.';
-        loading = false;
+        loading = false; // Reset loading on error
         return;
       }
       
@@ -64,76 +64,89 @@
       console.log(`Selected region: ${selectedRegion.label}, platformId: ${platformId}, regional: ${selectedRegion.regional}`);
       
       // Pass gameName and tagLine separately in the URL
-      goto(`/summoner/${platformId}/${encodeURIComponent(gameName.trim())}/${encodeURIComponent(tagLine.trim())}`);
+      // Use await here if you want the loading state to persist until navigation completes,
+      // though typically goto starts the navigation and the component unmounts.
+      await goto(`/summoner/${platformId}/${encodeURIComponent(gameName.trim())}/${encodeURIComponent(tagLine.trim())}`);
+      
+      // Loading might not need to be explicitly set to false if navigation succeeds,
+      // as the component will likely unmount. But setting it in finally is safer.
+      
     } catch (err) {
-      console.error('Error:', err);
-      error = 'An error occurred. Please try again.';
-    } finally {
-      loading = false;
-    }
+      console.error('Error during navigation setup:', err); // Changed error logging context
+      error = 'An error occurred while trying to navigate. Please try again.';
+      loading = false; // Ensure loading is reset on navigation error
+    } 
+    // Removed finally block as loading=false is handled in error case, 
+    // and not strictly needed on successful navigation due to component unmount.
+    // If the component *doesn't* unmount (e.g., shallow routing if that applies),
+    // you might need loading = false after await goto(...).
   }
 </script>
 
-<div class="w-full max-w-md mx-auto mt-8">
-  <form on:submit|preventDefault={handleSubmit} class="space-y-4">
-    <div class="flex flex-col">
-      <label for="riotId" class="text-lg font-medium text-gray-200 mb-2">Enter Riot ID</label>
-      <div class="flex items-center">
-        <input
-          type="text"
-          id="gameName"
-          bind:value={gameName}
-          placeholder="Game Name"
-          class="flex-grow px-4 py-3 rounded-l-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-        />
-        <div class="flex items-center justify-center px-2 py-3 bg-gray-800 text-white font-medium border-t border-b border-gray-600">
-          #
+<div class="w-full max-w-md mx-auto mt-8 p-6 md:bg-gray-900 rounded-lg shadow-lg">
+  {#if !loading}
+    <form on:submit|preventDefault={handleSubmit} class="space-y-6">
+      <div>
+        <label for="riotId" class="block text-lg font-medium text-gray-300 mb-2">Enter Riot ID</label>
+        <div class="flex items-center shadow-sm">
+          <input
+            type="text"
+            id="gameName"
+            bind:value={gameName}
+            placeholder="Game Name"
+            required
+            class="flex-grow px-4 py-3 rounded-l-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-gray-400"
+          />
+          <div class="flex items-center justify-center px-3 py-3 bg-gray-800 text-gray-400 font-semibold border-t border-b border-gray-600">
+            #
+          </div>
+          <input
+            type="text"
+            id="tagLine"
+            bind:value={tagLine}
+            placeholder="TAG"
+            required
+            class="w-24 px-4 py-3 rounded-r-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-gray-400"
+          />
         </div>
-        <input
-          type="text"
-          id="tagLine"
-          bind:value={tagLine}
-          placeholder="TAG"
-          class="flex-grow-0 w-24 px-4 py-3 rounded-r-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-        />
       </div>
-    </div>
-    
-    <div class="flex flex-col">
-      <label for="region" class="text-lg font-medium text-gray-200 mb-2">Select Region</label>
-      <select
-        id="region"
-        bind:value={region}
-        class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+      
+      <div>
+        <label for="region" class="block text-lg font-medium text-gray-300 mb-2">Select Region</label>
+        <select
+          id="region"
+          bind:value={region}
+          class="w-full px-4 py-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
+        >
+          {#each regions as regionOpt (regionOpt.value)}
+            <option value={regionOpt.value}>{regionOpt.label}</option>
+          {/each}
+        </select>
+      </div>
+      
+      <button
+        type="submit"
+        class="w-full py-3 px-4 rounded-md bg-green-600 hover:bg-green-700 text-white font-semibold transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 shadow-lg disabled:opacity-75 disabled:cursor-not-allowed"
+        disabled={!gameName.trim() || !tagLine.trim()}
       >
-        {#each regions as region}
-          <option value={region.value}>{region.label}</option>
-        {/each}
-      </select>
-    </div>
-    
-    <button
-      type="submit"
-      class="hover:cursor-pointer w-full py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-      disabled={loading}
-    >
-      {#if loading}
-        <span class="flex items-center justify-center">
-          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Analyzing...
-        </span>
-      {:else}
         Analyze My Gameplay
+      </button>
+      
+      {#if error}
+        <div class="text-red-400 text-center pt-2" transition:fade={{ duration: 300 }}>
+          {error}
+        </div>
       {/if}
-    </button>
-    
-    {#if error}
-      <div class="text-red-500 text-center" transition:fade>
-        {error}
-      </div>
-    {/if}
-  </form>
+    </form>
+  {:else}
+    <!-- Loading State -->
+    <div class="flex flex-col items-center justify-center h-64"> 
+      <svg class="animate-spin h-10 w-10 text-green-500 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <p class="text-xl font-medium text-gray-300">Analyzing...</p>
+      <p class="text-gray-400 mt-1">Summoners are being summoned.</p>
+    </div>
+  {/if}
 </div>
