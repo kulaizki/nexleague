@@ -12,8 +12,8 @@
     matches,
     championMastery,
     analysis,
-    latestDDragonVersion, // Receive version
-    championIdMap // Receive map
+    latestDDragonVersion, 
+    championIdMap 
   } = data;
 </script>
 

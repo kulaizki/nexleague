@@ -7,6 +7,8 @@
     summonerLevel: number;
     profileIconId: number;
     puuid: string;
+    gameName?: string;
+    tagLine?: string;
   }
   
   interface LeagueEntry {
@@ -117,7 +119,12 @@
       </div>
       
       <div class="flex-grow text-center md:text-left">
-        <h1 class="text-3xl font-bold text-white">{summoner.name}</h1>
+        <!-- Display Riot ID -->
+        {#if summoner.gameName && summoner.tagLine}
+          <h1 class="text-3xl font-bold text-white">{summoner.gameName}<span class="text-gray-400">#{summoner.tagLine}</span></h1>
+        {:else} <!-- Fallback if gameName/tagLine aren't available for some reason -->
+          <h1 class="text-3xl font-bold text-white">{summoner.name}</h1>
+        {/if}
         <p class="text-gray-300">Level {summoner.summonerLevel}</p>
         
         {#if leagueEntries && leagueEntries.length > 0}
