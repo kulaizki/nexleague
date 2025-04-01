@@ -45,7 +45,7 @@
           href="https://github.com/kulaizki"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-green-500 hover:underline hover:text-green-300 transition ease-in-out duration-200"
+          class="font-bold text-sky-500 hover:underline hover:text-sky-300 transition ease-in-out duration-200"
         >
           kulaizki
         </a>. All rights reserved.

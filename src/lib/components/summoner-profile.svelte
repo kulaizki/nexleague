@@ -109,19 +109,19 @@
   <!-- Tab Navigation -->
   <div class="bg-gray-900 px-4 flex overflow-x-auto">
     <button 
-      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'overview' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'overview' ? 'border-sky-500 text-sky-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'overview'}
     >
       Overview
     </button>
     <button 
-      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'matches' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'matches' ? 'border-sky-500 text-sky-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'matches'}
     >
       Recent Matches
     </button>
     <button 
-      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'champions' ? 'border-green-500 text-green-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
+      class="hover:cursor-pointer py-4 px-4 font-medium whitespace-nowrap md:border-b-2 {activeTab === 'champions' ? 'border-sky-500 text-sky-500' : 'border-transparent text-gray-400 hover:text-gray-200'}"
       on:click={() => activeTab = 'champions'}
     >
       Champions
@@ -131,15 +131,15 @@
   <!-- Tab Content -->
   <div class="p-6">
     {#if activeTab === 'overview'}
-      <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-green-500 [text-shadow:0_0_8px_rgba(74,222,128,0.5)]">Player Analysis</h2>
+      <div transition:fly={{ y: 10, duration: 200 }}> 
+        <h2 class="text-2xl font-bold mb-4 text-sky-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Player Analysis</h2>
         <div class="prose prose-lg prose-invert max-w-none">
           <Markdown md={analysis} />
         </div>
       </div>
     {:else if activeTab === 'matches'}
       <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-green-500 [text-shadow:0_0_8px_rgba(74,222,128,0.6)]">Recent Matches</h2>
+        <h2 class="text-2xl font-bold mb-4 text-sky-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Recent Matches</h2>
         
         {#if matches && matches.length > 0}
           <div class="space-y-4">
@@ -161,7 +161,7 @@
       </div>
     {:else if activeTab === 'champions'}
       <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-green-500 [text-shadow:0_0_8px_rgba(74,222,128,0.6)]">Champion Mastery</h2>
+        <h2 class="text-2xl font-bold mb-4 text-sky-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Champion Mastery</h2>
         
         {#if championMastery && championMastery.length > 0 && championIdMap && Object.keys(championIdMap).length > 0}
           <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
