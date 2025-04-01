@@ -115,18 +115,26 @@ export const getSummonerByRiotId = async (platformId: string, gameName: string, 
   const normalizedPlatformId = platformId.toLowerCase();
   console.log(`Normalized platformId: ${normalizedPlatformId}`);
   
-  const regionalRouting = getRegionalRouting(normalizedPlatformId);
-  console.log(`Regional routing determined: ${regionalRouting}`);
-  
-  // First get the Riot Account information using the regional routing
-  const accountUrl = `https://${regionalRouting}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}`;
+  // Determine the REGIONAL routing for ACCOUNT V1 API (americas, asia, europe ONLY)
+  let accountApiRegionalRouting: string;
+  const generalRegionalRouting = getRegionalRouting(normalizedPlatformId);
+  if (generalRegionalRouting === 'sea') {
+    accountApiRegionalRouting = 'asia'; // Map SEA platforms to ASIA for Account V1
+    console.log(`Mapping SEA platform ${normalizedPlatformId} to 'asia' for Account V1 API call.`);
+  } else {
+    accountApiRegionalRouting = generalRegionalRouting; 
+  }
+  console.log(`Account V1 API Regional routing determined: ${accountApiRegionalRouting}`);
+
+  // First get the Riot Account information using the ACCOUNT V1 specific regional routing
+  const accountUrl = `https://${accountApiRegionalRouting}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${encodeURIComponent(gameName)}/${encodeURIComponent(tagLine)}`;
   console.log(`Fetching account data from: ${accountUrl}`);
   
   try {
     const accountData: RiotAccount = await fetchFromRiotAPI(accountUrl);
     console.log(`Account data retrieved. PUUID: ${accountData.puuid}`);
     
-    // Then get the summoner data using the platform ID
+    // Then get the summoner data using the PLATFORM ID specific endpoint (e.g., sg2.api...)
     const summonerUrl = `${getBaseUrl(normalizedPlatformId)}/summoner/v4/summoners/by-puuid/${accountData.puuid}`;
     console.log(`Fetching summoner data from: ${summonerUrl}`);
     
@@ -142,6 +150,10 @@ export const getSummonerByRiotId = async (platformId: string, gameName: string, 
     return result;
   } catch (error) {
     console.error(`Error fetching summoner data for ${gameName}#${tagLine} in region ${platformId}:`, error);
+    // Log which URL failed if possible
+    if (error instanceof Error && error.message.includes('API request failed')) {
+       console.error(`The failing URL might be related to: ${accountUrl} or the subsequent summoner call`);
+    }
     throw error;
   }
 };
