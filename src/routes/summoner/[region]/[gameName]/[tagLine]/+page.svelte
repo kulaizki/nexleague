@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Footer from '$lib/components/Footer.svelte';
-  import SummonerProfile from '$lib/components/SummonerProfile.svelte'; 
+  import Footer from '$lib/components/footer.svelte';
+  import SummonerProfile from '$lib/components/summoner-profile.svelte';
   
   export let data;
   

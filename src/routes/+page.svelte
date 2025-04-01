@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { cubicOut } from 'svelte/easing';
-  import Footer from '$lib/components/Footer.svelte';
-  import SummonerSearch from './SummonerSearch.svelte';
+  import Footer from '$lib/components/footer.svelte';
+  import SummonerSearch from './summoner-search.svelte';
   
   let show: boolean = false;
   
