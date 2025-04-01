@@ -5,11 +5,16 @@
   
   export let data;
   
-  const summoner = data.summoner;
-  const leagueEntries = data.leagueEntries;
-  const matches = data.matches;
-  const championMastery = data.championMastery;
-  const analysis = data.analysis;
+  // Extract data passed from the server
+  const { 
+    summoner,
+    leagueEntries,
+    matches,
+    championMastery,
+    analysis,
+    latestDDragonVersion, // Receive version
+    championIdMap // Receive map
+  } = data;
 </script>
 
 <div class="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
@@ -29,6 +34,8 @@
         {matches}
         {championMastery}
         {analysis}
+        {latestDDragonVersion}
+        {championIdMap}
       />
     </div>
   </div>
