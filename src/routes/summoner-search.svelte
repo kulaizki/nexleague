@@ -83,7 +83,7 @@
   }
 </script>
 
-<div class="w-full max-w-md mx-auto mt-8 p-6 md:bg-gray-900 rounded-lg shadow-lg">
+<div class="w-full max-w-md mx-auto mt-8 p-6 md:bg-gray-900 rounded-lg md:shadow-lg">
   {#if !loading}
     <form on:submit|preventDefault={handleSubmit} class="space-y-6">
       <div>
