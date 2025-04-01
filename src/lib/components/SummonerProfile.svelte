@@ -2,59 +2,13 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import Markdown from 'svelte-exmarkdown';
-  
-  interface Summoner {
-    name: string;
-    summonerLevel: number;
-    profileIconId: number;
-    puuid: string;
-    gameName?: string;
-    tagLine?: string;
-  }
-  
-  interface LeagueEntry {
-    queueType: string;
-    tier: string;
-    rank: string;
-    leaguePoints: number;
-    wins: number;
-    losses: number;
-  }
-  
-  interface Participant {
-    puuid: string;
-    championName: string;
-    win: boolean;
-    kills: number;
-    deaths: number;
-    assists: number;
-    totalMinionsKilled: number;
-    visionScore: number;
-    role: string;
-    lane: string;
-    totalDamageDealtToChampions: number;
-    totalDamageTaken: number;
-  }
-  
-  interface MatchInfo {
-    participants: Participant[];
-    gameMode: string;
-    gameDuration: number;
-    gameCreation: number;
-  }
-  
-  interface Match {
-    info: MatchInfo;
-  }
-  
-  interface ChampionMastery {
-    championId: number;
-    championLevel: number;
-    championPoints: number;
-    championPointsSinceLastLevel: number;
-    championPointsUntilNextLevel: number;
-  }
-  
+
+  import type { Summoner } from '$types/summoner';
+  import type { LeagueEntry } from '$types/leagueEntry';
+  import type { Match } from '$types/match';
+  import type { MatchParticipant } from '$types/matchParticipant'; 
+  import type { ChampionMastery } from '$types/championMastery';
+
   export let summoner: Summoner;
   export let leagueEntries: LeagueEntry[];
   export let matches: Match[];
@@ -76,7 +30,10 @@
       case 'RANKED_TFT':
         return 'Ranked TFT';
       default:
-        return queueType.replace(/_/g, ' ');
+        return queueType
+          .replace(/^RANKED_/, '') // Remove RANKED_ prefix
+          .replace(/_/, ' ') // Replace underscore with space
+          .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize words
     }
   }
   
@@ -111,7 +68,7 @@
       <div class="flex-shrink-0">
         <div class="rounded-full h-24 w-24 overflow-hidden border-4 border-green-500">
           <img 
-            src={`https://ddragon.leagueoflegends.com/cdn/14.6.1/img/profileicon/${summoner.profileIconId}.png`}
+            src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/profileicon/${summoner.profileIconId}.png`}
             alt="Summoner Icon"
             on:error={(e) => handleImageError(e, placeholderIcon)}
             class="h-full w-full object-cover"
@@ -137,7 +94,7 @@
                 <p class="text-sm">{entry.leaguePoints} LP</p>
                 <p class="text-xs text-gray-400">
                   {entry.wins}W {entry.losses}L 
-                  ({Math.round((entry.wins / (entry.wins + entry.losses)) * 100)}%)
+                  ({Math.round((entry.wins / (entry.wins + entry.losses || 1)) * 100)}%)
                 </p>
               </div>
             {/each}
@@ -184,17 +141,17 @@
       <div transition:fly={{ y: 10, duration: 200 }}>
         <h2 class="text-2xl font-bold mb-4 text-green-500">Recent Matches</h2>
         
-        {#if matches.length > 0}
+        {#if matches && matches.length > 0}
           <div class="space-y-4">
             {#each matches as match}
-              {@const participant = match.info.participants.find((p: Participant) => p.puuid === summoner.puuid)}
+              {@const participant = match.info.participants.find((p: MatchParticipant) => p.puuid === summoner.puuid)}
               {#if participant}
                 <div class="bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row gap-4">
                   <!-- Champion Icon -->
                   <div class="flex-shrink-0 flex flex-col items-center">
                     <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-900/40' : 'bg-red-900/40'}`}>
                       <img 
-                        src={`https://ddragon.leagueoflegends.com/cdn/14.6.1/img/champion/${participant.championName}.png`}
+                        src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/champion/${participant.championName}.png`}
                         alt={participant.championName}
                         class="h-14 w-14 rounded-full"
                         on:error={(e) => handleImageError(e, championPlaceholder)}
@@ -282,7 +239,7 @@
                   <div class="w-full bg-gray-600 rounded-full h-1.5 mt-2">
                     <div 
                       class="bg-blue-500 h-1.5 rounded-full" 
-                      style="width: {Math.min(100, (mastery.championPointsSinceLastLevel / (mastery.championPointsSinceLastLevel + mastery.championPointsUntilNextLevel)) * 100)}%">
+                      style="width: {Math.min(100, (mastery.championPointsSinceLastLevel / (mastery.championPointsSinceLastLevel + mastery.championPointsUntilNextLevel || 1)) * 100)}%">
                     </div>
                   </div>
                 </div>

@@ -29,6 +29,7 @@
 	"dependencies": {
 		"@google/genai": "^0.6.0",
 		"@google/generative-ai": "^0.24.0",
+		"marked": "^15.0.7",
 		"svelte-exmarkdown": "^5.0.0"
 	}
 }
