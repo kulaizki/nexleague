@@ -2,11 +2,11 @@
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
   import Markdown from 'svelte-exmarkdown';
+  import MatchItem from './match-item.svelte';
 
   import type { Summoner } from '$types/summoner';
   import type { LeagueEntry } from '$types/leagueEntry';
   import type { Match } from '$types/match';
-  import type { MatchParticipant } from '$types/matchParticipant'; 
   import type { ChampionMastery } from '$types/championMastery';
 
   export let summoner: Summoner;
@@ -144,69 +144,15 @@
         {#if matches && matches.length > 0}
           <div class="space-y-4">
             {#each matches as match}
-              {@const participant = match.info.participants.find((p: MatchParticipant) => p.puuid === summoner.puuid)}
-              {#if participant}
-                <div class="bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row gap-4">
-                  <!-- Champion Icon -->
-                  <div class="flex-shrink-0 flex flex-col items-center">
-                    <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-900/40' : 'bg-red-900/40'}`}>
-                      <img 
-                        src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/champion/${participant.championName}.png`}
-                        alt={participant.championName}
-                        class="h-14 w-14 rounded-full"
-                        on:error={(e) => handleImageError(e, championPlaceholder)}
-                      />
-                    </div>
-                    <p class="text-sm mt-1 text-center truncate w-20">{participant.championName}</p>
-                  </div>
-                  
-                  <!-- Match Details -->
-                  <div class="flex-grow">
-                    <div class="flex justify-between mb-2">
-                      <span class={`font-bold ${participant.win ? 'text-green-500' : 'text-red-500'}`}>
-                        {participant.win ? 'Victory' : 'Defeat'}
-                      </span>
-                      <div class="text-sm text-gray-400">
-                        <span>{match.info.gameMode}</span>
-                        <span class="mx-2">•</span>
-                        <span>{Math.floor(match.info.gameDuration / 60)}m {match.info.gameDuration % 60}s</span>
-                        <span class="mx-2">•</span>
-                        <span>{formatDate(match.info.gameCreation)}</span>
-                      </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-                      <div>
-                        <p class="text-lg font-bold">{participant.kills} / {participant.deaths} / {participant.assists}</p>
-                        <p class="text-sm text-gray-400">
-                          KDA: {getKDA(participant.kills, participant.deaths, participant.assists)}
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <p class="font-bold">CS: {participant.totalMinionsKilled}</p>
-                        <p class="text-sm text-gray-400">
-                          {(participant.totalMinionsKilled / (match.info.gameDuration / 60)).toFixed(1)} / min
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <p class="font-bold">{participant.visionScore} Vision</p>
-                        <p class="text-sm text-gray-400">
-                          {participant.role}/{participant.lane}
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <p class="font-bold">{Math.round(participant.totalDamageDealtToChampions / 1000)}k Damage</p>
-                        <p class="text-sm text-gray-400">
-                          {Math.round(participant.totalDamageTaken / 1000)}k Taken
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {/if}
+              <MatchItem 
+                {match}
+                summonerPuuid={summoner.puuid}
+                {latestDDragonVersion}
+                {championPlaceholder}
+                {formatDate}
+                {getKDA}
+                {handleImageError}
+              />
             {/each}
           </div>
         {:else}
