@@ -18,10 +18,10 @@
 </script>
 
 {#if participant}
-  <div class="bg-gray-700 rounded-lg p-4 flex flex-col md:flex-row gap-4">
+  <div class="bg-gray-800 rounded-lg pt-4 pl-4 pr-4 flex flex-col md:flex-row gap-4">
     <!-- Champion Icon -->
     <div class="flex-shrink-0 flex flex-col items-center w-20">
-      <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-900/40' : 'bg-red-900/40'}`}>
+      <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-700/40' : 'bg-red-700/40'}`}>
         <img
           src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/champion/${participant.championName}.png`}
           alt={participant.championName}
@@ -36,7 +36,7 @@
     <!-- Match Details -->
     <div class="flex-grow">
       <div class="flex flex-wrap justify-between items-center mb-2 gap-x-4 gap-y-1">
-        <span class={`font-bold ${participant.win ? 'text-green-500' : 'text-red-500'}`}>
+        <span class={`font-bold ${participant.win ? 'text-green-400' : 'text-red-500'}`}>
           {participant.win ? 'Victory' : 'Defeat'}
         </span>
         <div class="text-sm text-gray-400 flex flex-wrap gap-x-2">
