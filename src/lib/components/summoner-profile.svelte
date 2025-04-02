@@ -168,7 +168,7 @@
             {#each championMastery as mastery}
               {@const championName = getChampionNameById(mastery.championId)}
               {#if championName !== 'UnknownChamp'}
-                <div class="bg-gray-700 rounded-lg p-4 flex flex-col items-center">
+                <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
                   <img 
                     src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/champion/${championName}.png`}
                     alt={championName}
