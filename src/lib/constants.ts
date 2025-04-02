@@ -52,7 +52,5 @@ export const regions = [
   // SEA
   { label: 'Southeast Asia', value: 'Southeast Asia', platform: 'sg2', regional: 'sea' },
   { label: 'Taiwan', value: 'Taiwan', platform: 'tw2', regional: 'sea' },
-  { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' },
-  { label: 'Philippines', value: 'Philippines', platform: 'ph2', regional: 'sea' },
-  { label: 'Thailand', value: 'Thailand', platform: 'th2', regional: 'sea' }
+  { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' }
 ];
