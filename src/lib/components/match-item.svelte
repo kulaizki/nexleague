@@ -18,7 +18,7 @@
 </script>
 
 {#if participant}
-  <div class="bg-gray-800 rounded-lg pt-4 pl-4 pr-4 flex flex-col md:flex-row gap-4">
+  <div class="bg-gray-800 rounded-lg p-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
     <!-- Champion Icon -->
     <div class="flex-shrink-0 flex flex-col items-center w-20">
       <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-700/40' : 'bg-red-700/40'}`}>
@@ -39,7 +39,7 @@
         <span class={`font-bold ${participant.win ? 'text-green-400' : 'text-red-500'}`}>
           {participant.win ? 'Victory' : 'Defeat'}
         </span>
-        <div class="text-sm text-gray-400 flex flex-wrap gap-x-2">
+        <div class="text-sm text-gray-400 flex flex-wrap justify-end gap-x-2">
           <span>{match.info.gameMode}</span>
           <span>•</span>
           <span>{Math.floor(match.info.gameDuration / 60)}m {match.info.gameDuration % 60}s</span>
@@ -56,14 +56,14 @@
           </p>
         </div>
 
-        <div>
+        <div class="text-right">
           <p class="font-bold">CS: {participant.totalMinionsKilled}</p>
           <p class="text-sm text-gray-400">
             ({(participant.totalMinionsKilled / (match.info.gameDuration / 60 || 1)).toFixed(1)}/min)
           </p>
         </div>
 
-        <div>
+        <div class="text-right">
           <p class="font-bold">{participant.visionScore} Vision</p>
           {#if participant.role && participant.lane}
             <p class="text-sm text-gray-400">
@@ -72,7 +72,7 @@
           {/if}
         </div>
 
-        <div>
+        <div class="text-right">
           <p class="font-bold">{Math.round(participant.totalDamageDealtToChampions / 1000)}k Dmg</p>
           <p class="text-sm text-gray-400">
             ({Math.round(participant.totalDamageTaken / 1000)}k Taken)
