@@ -1,8 +1,8 @@
 # NexLeague
 
-A web application built with SvelteKit to search for and display League of Legends summoner profiles using the Riot Games API. Users can search using a summoner's Riot ID (Game Name + Tagline) and select the appropriate region. It also integrates the Google Gemini API for potential future features or analysis.
+A SvelteKit web app that uses the Riot Games API to search and display League of Legends summoner profiles by Riot ID and region, with Google Gemini API integration for analysis.
 
-## ✨ Features
+## 🔥 Features
 
 *   **Dynamic Summoner Search:** Instantly search for any League of Legends player using their Riot ID (Game Name + Tagline).
 *   **Global Region Support:** Select from a comprehensive list of official Riot Games regions (NA, EUW, KR, SEA, etc.) to ensure accurate profile retrieval.
@@ -20,7 +20,7 @@ A web application built with SvelteKit to search for and display League of Legen
 *   Riot Games API
 *   Google Gemini API
 
-## 🔧 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -59,6 +59,6 @@ This command builds the application for production. You can preview the producti
 npm run preview
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to open an issue or submit a pull request.
