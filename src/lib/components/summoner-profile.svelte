@@ -43,7 +43,7 @@
   }
 </script>
 
-<div class="bg-gray-900 rounded-lg overflow-hidden shadow-lg">
+<div class="border border-gray-800 bg-gray-900 rounded-lg overflow-hidden shadow-lg">
   <ProfileHeader 
     {summoner}
     {leagueEntries}
