@@ -86,20 +86,12 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     // console.log('Latest DDragon version:', latestDDragonVersion);
     // console.log(`Champion ID Map created with ${Object.keys(championIdMap).length} entries.`);
     
-    // console.log('Fetching match details for analysis (latest 5)...');
-    const analysisMatchIds = matchIds.slice(0, 10);
-    const analysisMatches = await Promise.all(
-        analysisMatchIds.map(id => getMatch(region, id))
+    // console.log('Fetching match details (up to 10)...');
+    const matchDetailIds = matchIds.slice(0, 10);
+    const allMatchDetails = await Promise.all(
+        matchDetailIds.map(id => getMatch(region, id))
     );
-    // console.log('Analysis match details fetched:', analysisMatches.length);
-
-    // Fetch details for all 10 matches for display
-    // console.log('Fetching match details for display (up to 10)...');
-    const displayMatches = matchIds.length > 5 
-        ? await Promise.all(matchIds.slice(5, 10).map(id => getMatch(region, id)))
-        : [];
-    const allMatchesForDisplay = [...analysisMatches, ...displayMatches];
-    // console.log('Total matches fetched for display:', allMatchesForDisplay.length);
+    // console.log('Match details fetched:', allMatchDetails.length);
 
     // Prepare a *more concise* player data object specifically for analysis
     // console.log('Preparing concise player data for analysis...');
@@ -114,7 +106,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
           lp: entry.leaguePoints, 
           winRate: ((entry.wins / (entry.wins + entry.losses || 1)) * 100).toFixed(1) + '%'
       })),
-      recentMatchesSummary: analysisMatches.map(match => {
+      recentMatchesSummary: allMatchDetails.map(match => { // Use the single fetched array
         const participant = match.info.participants.find(p => p.puuid === summoner.puuid);
         return participant ? {
           champion: participant.championName,
@@ -147,7 +139,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     return {
       summoner, 
       leagueEntries, 
-      matches: allMatchesForDisplay, 
+      matches: allMatchDetails, // Use the single fetched array
       championMastery: championMastery.slice(0, 10), 
       analysis, 
       latestDDragonVersion, 
