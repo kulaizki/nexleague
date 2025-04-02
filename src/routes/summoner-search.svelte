@@ -2,38 +2,15 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { fade } from 'svelte/transition';
+  import { loadingMessages, regions } from '$lib/constants';
   
   let gameName = '';
   let tagLine = '';
   let region = 'Southeast Asia';
   let loading = false;
   let error = '';
-  
-  const regions = [
-    // Americas
-    { label: 'North America', value: 'North America', platform: 'na1', regional: 'americas' },
-    { label: 'Brazil', value: 'Brazil', platform: 'br1', regional: 'americas' },
-    { label: 'LAN', value: 'LAN', platform: 'la1', regional: 'americas' },
-    { label: 'LAS', value: 'LAS', platform: 'la2', regional: 'americas' },
-    { label: 'Oceania', value: 'Oceania', platform: 'oc1', regional: 'americas' },
 
-    // Europe
-    { label: 'Europe West', value: 'Europe West', platform: 'euw1', regional: 'europe' },
-    { label: 'Europe Nordic & East', value: 'Europe Nordic & East', platform: 'eun1', regional: 'europe' },
-    { label: 'Russia', value: 'Russia', platform: 'ru', regional: 'europe' },
-    { label: 'Türkiye', value: 'Türkiye', platform: 'tr1', regional: 'europe' },
-
-    // Asia
-    { label: 'Korea', value: 'Korea', platform: 'kr', regional: 'asia' },
-    { label: 'Japan', value: 'Japan', platform: 'jp1', regional: 'asia' },
-
-    // SEA
-    { label: 'Southeast Asia', value: 'Southeast Asia', platform: 'sg2', regional: 'sea' },
-    { label: 'Taiwan', value: 'Taiwan', platform: 'tw2', regional: 'sea' },
-    { label: 'Vietnam', value: 'Vietnam', platform: 'vn2', regional: 'sea' },
-    { label: 'Philippines', value: 'Philippines', platform: 'ph2', regional: 'sea' },
-    { label: 'Thailand', value: 'Thailand', platform: 'th2', regional: 'sea' }
-  ];
+  let currentLoadingMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
   
   async function handleSubmit() {
     if (!gameName.trim()) {
@@ -47,6 +24,7 @@
     }
     
     error = '';
+    currentLoadingMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
     loading = true;
     
     try {
@@ -75,7 +53,6 @@
 
 <div class="w-full max-w-md mx-auto mt-8 p-6 md:bg-gray-900 rounded-lg md:shadow-lg grid relative"> 
   
-  <!-- Form: Always rendered, visibility controlled by classes -->
   <form 
     on:submit|preventDefault={handleSubmit} 
     class="space-y-6 col-start-1 row-start-1 transition-all duration-200 ease-in-out {loading ? 'opacity-0 pointer-events-none blur-sm' : 'opacity-100 pointer-events-auto blur-0'}" 
@@ -140,7 +117,6 @@
     {/if}
   </form>
 
-  <!-- Loading State: Always rendered, visibility controlled by classes -->
   <div 
     class="flex flex-col items-center justify-center col-start-1 row-start-1 transition-all duration-200 ease-in-out {loading ? 'opacity-100 pointer-events-auto blur-0' : 'opacity-0 pointer-events-none blur-sm'}" 
   >
@@ -149,7 +125,7 @@
       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
     </svg>
     <p class="text-xl font-medium text-gray-300">Analyzing...</p>
-    <p class="text-gray-400 mt-1">Summoners are being summoned.</p>
+    <p class="text-gray-400 mt-1">{currentLoadingMessage}</p>
   </div>
 
 </div>
