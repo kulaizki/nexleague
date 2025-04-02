@@ -18,7 +18,7 @@
 </script>
 
 {#if participant}
-  <div class="bg-gray-800 rounded-lg p-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
+  <div class="bg-gray-800 rounded-lg pl-4 pt-4 pr-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
     <!-- Champion Icon -->
     <div class="flex-shrink-0 flex flex-col items-center w-20">
       <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-700/40' : 'bg-red-700/40'}`}>
