@@ -38,9 +38,9 @@
     class="py-4 md:py-2 bg-gray-900 border-t border-gray-600 text-white"
     transition:slideUp|local
   >
-    <div class="space-y-4 md:space-y-0 max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-      <p class="text-sm md:my-3">
-        &copy; 2025 
+    <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-sm md:my-3 order-2 md:order-1">
+        &copy; {new Date().getFullYear()} 
         <a
           href="https://github.com/kulaizki"
           target="_blank"
@@ -50,7 +50,7 @@
           kulaizki
         </a>. All rights reserved.
       </p>
-      <div class="flex space-x-4">
+      <div class="flex space-x-4 order-1 md:order-2">
         <a
           href="https://github.com/kulaizki/nexleague"
           target="_blank"
