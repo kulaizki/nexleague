@@ -38,7 +38,7 @@
     class="py-4 md:py-2 bg-gray-900 border-t border-gray-600 text-white"
     transition:slideUp|local
   >
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+    <div class="space-y-4 md:space-y-0 max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
       <p class="text-sm md:my-3">
         &copy; 2025 
         <a
