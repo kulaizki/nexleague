@@ -11,7 +11,7 @@ export const loadingMessages = [
   "Charging the Hextech rocket...",
   "Checking minimap awareness levels...",
   "Synchronizing summoner spells now...",
-  "Analyzing creep score patterns...",
+  "Studying creep score patterns...",
   "Evaluating team composition synergy...",
   "Predicting enemy jungle routes...",
   "Optimizing item build paths...",
