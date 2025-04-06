@@ -35,11 +35,11 @@
 
 {#if show}
   <footer 
-    class="py-4 md:py-2 bg-gray-900 border-t border-gray-600 text-white"
+    class="py-2 bg-gray-900 border-t border-gray-600 text-white"
     transition:slideUp|local
   >
     <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-row justify-between items-center">
-      <p class="text-sm md:my-3">
+      <p class="text-sm my-3">
         &copy; {new Date().getFullYear()} 
         <a
           href="https://github.com/kulaizki"
@@ -52,7 +52,7 @@
       </p>
       <div class="flex space-x-4">
         <a
-          href="https://github.com/kulaizki/nexleague"
+          href="https://github.com/kulaizki/z1"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
