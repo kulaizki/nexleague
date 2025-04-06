@@ -12,16 +12,16 @@
 
   let participant: MatchParticipant | undefined;
 
-  // Find the participant corresponding to the summoner
   $: participant = match.info.participants.find((p: MatchParticipant) => p.puuid === summonerPuuid);
 
 </script>
 
 {#if participant}
-  <div class="bg-gray-800 rounded-lg pl-4 pt-4 pr-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
-    <!-- Champion Icon -->
-    <div class="flex-shrink-0 flex flex-col items-center w-20">
-      <div class={`rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-700/40' : 'bg-red-700/40'}`}>
+  <div class="bg-gray-800 rounded-lg p-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
+    <!-- Champion Info Area -->
+    <div class="flex items-center gap-3 md:gap-1 md:flex-col md:w-20 md:flex-shrink-0">
+      <!-- Champion Icon -->
+      <div class={`flex-shrink-0 rounded-full h-16 w-16 flex items-center justify-center ${participant.win ? 'bg-green-700/40' : 'bg-red-700/40'}`}>
         <img
           src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/champion/${participant.championName}.png`}
           alt={participant.championName}
@@ -30,16 +30,26 @@
           on:error={(e) => handleImageError(e, championPlaceholder)}
         />
       </div>
-      <p class="text-sm mt-1 text-center truncate">{participant.championName}</p>
+      <!-- Champ Name + Result (Mobile) / Champ Name (Desktop) -->
+      <div class="flex flex-col gap-2 md:gap-0 md:items-center">
+        <p class="text-sm font-medium mb-0 leading-none md:mt-1 md:text-center md:truncate">{participant.championName}</p>
+        <!-- Victory/Defeat (Mobile Only) -->
+        <span class={`block md:hidden font-bold text-sm mt-0 ${participant.win ? 'text-green-400' : 'text-red-500'}`}>
+          {participant.win ? 'Victory' : 'Defeat'}
+        </span>
+      </div>
     </div>
 
     <!-- Match Details -->
     <div class="flex-grow">
-      <div class="flex flex-wrap justify-between items-center mb-2 gap-x-4 gap-y-1">
+      <!-- Top Details Row (Desktop) -->
+      <div class="hidden md:flex flex-wrap justify-between items-center mb-2 gap-x-4 gap-y-1">
+        <!-- Victory/Defeat (Desktop Only) -->
         <span class={`font-bold ${participant.win ? 'text-green-400' : 'text-red-500'}`}>
           {participant.win ? 'Victory' : 'Defeat'}
         </span>
-        <div class="text-sm text-gray-400 flex flex-wrap justify-end gap-x-2">
+        <!-- Game details for sm+ screens -->
+        <div class="flex text-sm text-gray-400 flex-wrap justify-end gap-x-2">
           <span>{match.info.gameMode}</span>
           <span>•</span>
           <span>{Math.floor(match.info.gameDuration / 60)}m {match.info.gameDuration % 60}s</span>
@@ -48,36 +58,45 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 md:mt-4">
         <div>
-          <p class="text-lg font-bold">{participant.kills} / {participant.deaths} / {participant.assists}</p>
-          <p class="text-sm text-gray-400">
+          <p class="text-lg font-bold mb-0 sm:mb-px">{participant.kills} / {participant.deaths} / {participant.assists}</p>
+          <p class="text-sm text-gray-400 mt-0 sm:mt-px">
             KDA: {getKDA(participant.kills, participant.deaths, participant.assists)}
           </p>
         </div>
 
-        <div class="text-right">
-          <p class="font-bold">CS: {participant.totalMinionsKilled}</p>
-          <p class="text-sm text-gray-400">
+        <div class="text-left sm:text-right">
+          <p class="font-bold mb-0 sm:mb-px">CS: {participant.totalMinionsKilled}</p>
+          <p class="text-sm text-gray-400 mt-0 sm:mt-px">
             ({(participant.totalMinionsKilled / (match.info.gameDuration / 60 || 1)).toFixed(1)}/min)
           </p>
         </div>
 
-        <div class="text-right">
-          <p class="font-bold">{participant.visionScore} Vision</p>
+        <div class="text-left sm:text-right">
+          <p class="font-bold mb-0 sm:mb-px">{participant.visionScore} Vision</p>
           {#if participant.role && participant.lane}
-            <p class="text-sm text-gray-400">
+            <p class="text-sm text-gray-400 mt-0 sm:mt-px">
               {participant.role}/{participant.lane}
             </p>
           {/if}
         </div>
 
-        <div class="text-right">
-          <p class="font-bold">{Math.round(participant.totalDamageDealtToChampions / 1000)}k Dmg</p>
-          <p class="text-sm text-gray-400">
+        <div class="text-left sm:text-right">
+          <p class="font-bold mb-0 sm:mb-px">{Math.round(participant.totalDamageDealtToChampions / 1000)}k Dmg</p>
+          <p class="text-sm text-gray-400 mt-0 sm:mt-px">
             ({Math.round(participant.totalDamageTaken / 1000)}k Taken)
           </p>
         </div>
+      </div>
+
+      <!-- Game details for mobile screens -->
+      <div class="flex sm:hidden mt-4 text-xs text-gray-400 flex-wrap justify-start gap-x-2">
+        <span>{match.info.gameMode}</span>
+        <span>•</span>
+        <span>{Math.floor(match.info.gameDuration / 60)}m {match.info.gameDuration % 60}s</span>
+        <span>•</span>
+        <span>{formatDate(match.info.gameCreation)}</span>
       </div>
     </div>
   </div>

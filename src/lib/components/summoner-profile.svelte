@@ -98,7 +98,7 @@
 </div>
 
 <style>
-	:global(p) {
+	:global(.prose p) {
 		margin-bottom: 1em;
 		line-height: 1.6;
 	}
