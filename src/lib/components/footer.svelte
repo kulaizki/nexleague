@@ -39,7 +39,7 @@
     transition:slideUp|local
   >
     <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-row justify-between items-center">
-      <p class="text-sm my-3">
+      <p class="text-xs md:text-sm my-3">
         &copy; {new Date().getFullYear()} 
         <a
           href="https://github.com/kulaizki"
@@ -64,7 +64,24 @@
             class="w-10 h-10 transition ease-in-out duration-300 hover:scale-110 hover:opacity-75"
           />
         </a>
+        <a
+          href="https://ko-fi.com/kulaizki"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ko-fi"
+          class="flex items-center space-x-2 group"
+        >
+          <div class="bg-white rounded-md p-1 flex items-center justify-center transition ease-in-out duration-300 group-hover:scale-110 group-hover:opacity-75">
+            <img
+              src="https://cdn.simpleicons.org/kofi/FF5E5B"
+              alt="Ko-fi"
+              class="w-8 h-8"
+            />
+          </div>
+        </a>
       </div>
     </div>
   </footer>
 {/if}
+
+
