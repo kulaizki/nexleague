@@ -23,6 +23,9 @@
   let placeholderIcon = '/placeholder-icon.png';
   let championPlaceholder = '/champion-placeholder.png';
   
+  $: rankedSoloEntry = leagueEntries.find(entry => entry.queueType === 'RANKED_SOLO_5x5');
+  $: rankTier = rankedSoloEntry?.tier;
+  
   function formatDate(timestamp: number): string {
     const date = new Date(timestamp);
     return new Intl.DateTimeFormat('en-US', {

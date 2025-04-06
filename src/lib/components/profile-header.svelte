@@ -55,8 +55,19 @@
         <div class="flex flex-wrap gap-4 mt-4 justify-center md:justify-start">
           {#each leagueEntries as entry}
             <div class="bg-gray-700 rounded-lg p-3 flex flex-col items-center" transition:fly={{ y: 20, duration: 300 }}>
-              <p class="text-sm text-gray-400">{getQueueTypeDisplay(entry.queueType)}</p>
-              <p class="font-bold">{entry.tier} {entry.rank}</p>
+              <p class="text-sm text-gray-400 mb-1">{getQueueTypeDisplay(entry.queueType)}</p>
+              {#if entry.queueType === 'RANKED_SOLO_5x5' && entry.tier}
+                <div class="flex items-center gap-2 mb-1">
+                  <img 
+                    src={`/images/ranks/Rank=${entry.tier}.png`}
+                    alt={entry.tier}
+                    class="h-8 w-8 object-contain" 
+                  />
+                  <p class="font-bold">{entry.tier} {entry.rank}</p>
+                </div>
+              {:else}
+                <p class="font-bold mb-1">{entry.tier} {entry.rank}</p>
+              {/if}
               <p class="text-sm">{entry.leaguePoints} LP</p>
               <p class="text-xs text-gray-400">
                 {entry.wins}W {entry.losses}L 
