@@ -59,7 +59,7 @@
               {#if entry.queueType === 'RANKED_SOLO_5x5' && entry.tier}
                 <div class="flex items-center gap-2 mb-1">
                   <img 
-                    src={`/images/ranks/Rank=${entry.tier}.png`}
+                    src={`/ranks/Rank=${entry.tier}.png`}
                     alt={entry.tier}
                     class="h-8 w-8 object-contain" 
                   />
