@@ -18,7 +18,7 @@
 </script>
 
 <div transition:fly={{ y: 10, duration: 200 }}>
-  <h2 class="text-2xl font-bold mb-4 text-emerald-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Champion Mastery</h2>
+  <h2 class="text-2xl font-bold mb-4 text-emerald-500 [text-shadow:0_0_8px_rgba(0,255,8,0.5)]">Champion Mastery</h2>
   
   {#if championMastery && championMastery.length > 0 && championIdMap && Object.keys(championIdMap).length > 0}
     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
