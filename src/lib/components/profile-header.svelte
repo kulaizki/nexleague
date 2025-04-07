@@ -16,12 +16,12 @@
   }
 </script>
 
-<div class="bg-gradient-to-r from-gray-900 to-sky-700 p-6">
+<div class="bg-gradient-to-r from-gray-900 to-emerald-700 p-6">
   <div class="flex flex-col sm:flex-row items-center gap-6 justify-between">
     
     <div class="flex items-center gap-4 sm:gap-6">
       <div class="flex-shrink-0">
-        <div class="rounded-full h-20 w-20 sm:h-24 sm:w-24 overflow-hidden border-4 border-sky-300">
+        <div class="rounded-full h-20 w-20 sm:h-24 sm:w-24 overflow-hidden border-4 border-emerald-300">
           <img 
             src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/profileicon/${summoner.profileIconId}.png`}
             alt="Summoner Icon"

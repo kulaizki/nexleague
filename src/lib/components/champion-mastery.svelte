@@ -18,14 +18,14 @@
 </script>
 
 <div transition:fly={{ y: 10, duration: 200 }}>
-  <h2 class="text-2xl font-bold mb-4 text-sky-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Champion Mastery</h2>
+  <h2 class="text-2xl font-bold mb-4 text-emerald-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Champion Mastery</h2>
   
   {#if championMastery && championMastery.length > 0 && championIdMap && Object.keys(championIdMap).length > 0}
     <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
       {#each championMastery as mastery}
         {@const championName = getChampionNameById(mastery.championId)}
         {#if championName !== 'UnknownChamp'}
-          <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center border-2 border-transparent hover:border-sky-600 transition-colors duration-200">
+          <div class="bg-gray-800 rounded-lg p-4 flex flex-col items-center border-2 border-transparent hover:border-emerald-600 transition-colors duration-200">
             <img 
               src={`https://ddragon.leagueoflegends.com/cdn/${latestDDragonVersion}/img/champion/${championName}.png`}
               alt={championName}

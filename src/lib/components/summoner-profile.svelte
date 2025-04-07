@@ -62,14 +62,14 @@
   <div class="p-6">
     {#if activeTab === 'overview'}
       <div transition:fly={{ y: 10, duration: 200 }}> 
-        <h2 class="text-2xl font-bold mb-4 text-sky-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Player Analysis</h2>
+        <h2 class="text-2xl font-bold mb-4 text-emerald-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Player Analysis</h2>
         <div class="prose prose-lg prose-invert max-w-none">
           <Markdown md={analysis} />
         </div>
       </div>
     {:else if activeTab === 'matches'}
       <div transition:fly={{ y: 10, duration: 200 }}>
-        <h2 class="text-2xl font-bold mb-4 text-sky-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Recent Matches</h2>
+        <h2 class="text-2xl font-bold mb-4 text-emerald-500 [text-shadow:0_0_8px_rgba(0,200,255,0.5)]">Recent Matches</h2>
         
         {#if matches && matches.length > 0}
           <div class="space-y-4">

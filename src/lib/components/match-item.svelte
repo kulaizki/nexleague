@@ -18,7 +18,7 @@
 
 {#if participant}
   <div 
-    class="bg-gray-800 rounded-lg p-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-sky-600 transition-colors duration-200"
+    class="bg-gray-800 rounded-lg p-4 flex flex-col md:flex-row gap-4 border-2 border-transparent hover:border-emerald-600 transition-colors duration-200"
   >
     <!-- Champion Info Area -->
     <div class="flex items-center gap-3 md:gap-1 md:flex-col md:w-20 md:flex-shrink-0">
