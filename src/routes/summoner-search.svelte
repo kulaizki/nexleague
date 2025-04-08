@@ -104,7 +104,7 @@
     
     <button
       type="submit"
-      class="hover:cursor-pointer w-full py-3 px-4 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 shadow-lg hover:ring-2 hover:ring-emerald-500 hover:ring-opacity-60 disabled:opacity-75 disabled:cursor-not-allowed disabled:bg-emerald-600 disabled:ring-transparent"
+      class="border-2 border-emerald-950 hover:cursor-pointer w-full py-3 px-4 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-75 shadow-lg hover:ring-2 hover:ring-emerald-500 hover:ring-opacity-60 disabled:opacity-75 disabled:cursor-not-allowed disabled:bg-emerald-600 disabled:ring-transparent"
       disabled={!gameName.trim() || !tagLine.trim()}
     >
       Analyze
