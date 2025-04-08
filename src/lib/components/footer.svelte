@@ -35,7 +35,7 @@
 
 {#if show}
   <footer 
-    class="py-2 bg-gray-900 border-t border-gray-600 text-white"
+    class="py-2 bg-gray-950 border-t border-gray-600 text-white"
     transition:slideUp|local
   >
     <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-row justify-between items-center">
