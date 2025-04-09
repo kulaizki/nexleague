@@ -3,3 +3,11 @@
 * {
   /* border: solid 1px rgb(0, 255, 8); */
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gray-950;
+}
