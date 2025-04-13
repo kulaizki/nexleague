@@ -19,8 +19,8 @@ A SvelteKit web app that uses the Riot Games API to search and display League of
 *   [Tailwind CSS](https://tailwindcss.com/)
 *   [TypeScript](https://www.typescriptlang.org/)
 *   [Vite](https://vitejs.dev/)
-*   Riot Games API
-*   Google Gemini API
+*   [Riot Games API](https://developer.riotgames.com/)
+*   [Google Gemini API](https://ai.google.dev/)
 
 ## Getting Started
 
