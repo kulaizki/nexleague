@@ -1,4 +1,4 @@
-# NexLeague
+# nexleague 
 
 A SvelteKit web app that uses the Riot Games API to search and display League of Legends summoner profiles by Riot ID and region, with Google Gemini API integration for analysis.
 
