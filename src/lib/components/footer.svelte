@@ -38,16 +38,16 @@
     class="py-2 bg-gray-950 border-t border-gray-600 text-white"
     transition:slideUp|local
   >
-    <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-row justify-between items-center">
-      <p class="text-xs md:text-sm my-3">
+    <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-col-reverse md:flex-row justify-between items-center">
+      <p class="text-sm my-3 text-center md:text-left">
         &copy; {new Date().getFullYear()} 
         <a
-          href="https://github.com/kulaizki"
+          href="https://fitzsixto.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="font-bold text-emerald-500 hover:underline hover:text-emerald-300 transition ease-in-out duration-200"
+          class="[text-shadow:0_0_8px_rgba(0,255,8,0.6)] bg-gradient-to-r from-emerald-300 to-emerald-600 bg-clip-text text-transparent font-bold transition ease-in-out duration-200"
         >
-          kulaizki
+          Fitzsixto 
         </a>. All rights reserved.
       </p>
       <div class="flex space-x-4">
@@ -83,5 +83,3 @@
     </div>
   </footer>
 {/if}
-
-
