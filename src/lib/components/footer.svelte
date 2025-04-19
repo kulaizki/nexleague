@@ -38,8 +38,8 @@
     class="py-2 bg-gray-950 border-t border-gray-600 text-white"
     transition:slideUp|local
   >
-    <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-col-reverse md:flex-row justify-between items-center">
-      <p class="text-sm my-3 text-center md:text-left">
+    <div class="gap-4 max-w-6xl mx-auto px-6 flex flex-row justify-between items-center">
+      <p class="text-xs sm:text-sm my-3 text-center md:text-left">
         &copy; {new Date().getFullYear()} 
         <a
           href="https://fitzsixto.com"
