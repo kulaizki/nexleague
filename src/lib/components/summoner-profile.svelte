@@ -107,6 +107,6 @@
 	}
 
 	:global(strong) {
-		color: rgb(65, 233, 62);
+		color: #00bf7b;
 	}
 </style>
